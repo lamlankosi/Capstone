@@ -1,12 +1,12 @@
 import path from 'path'
 import cors from 'cors'
-import express from 'express'
 import 'dotenv/config'
+import { express, userRouter } from './controller/userController.js'
 
 const app = express()
 const port = +process.env.PORT || 4000
 
-
+app.use('/user', userRouter)
 app.use(
     express.static('./static'),
     express.json(),
@@ -17,7 +17,7 @@ app.use(
 )
 
 
-app.get('^/$|/eShop', (req, res) => {
+app.get('^/$|/gamingInventory', (req, res) => {
     res.status(200).sendFile(path.resolve('./static/html/index.html'))
 })
 
