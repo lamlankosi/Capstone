@@ -1,9 +1,9 @@
 import { createPool } from "mysql2";
 import 'dotenv/config'
 let connection = createPool({
-    host: process.env.hostDb,
-    user: process.env.userDb,
-    password: process.env.pwdDb,
+    host: process.env.dbHost,
+    user: process.env.dbUser,
+    password: process.env.dbPwd,
     database: process.env.dbName,
     multipleStatements: true,
     connectionLimit: 30,
