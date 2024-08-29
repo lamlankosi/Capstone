@@ -26,7 +26,7 @@ class Products{
             const strQry =`
             SELECT prodName, Category, description, quantity, amount, prodUrl
             FROM Products
-            WHERE= ${req.params.id}
+            WHERE prodID= ${req.params.id}
             `
             db.query(strQry, (err, results) => {
                 if(err) throw new Error ('Couldn\'t retrieve products')
@@ -89,7 +89,7 @@ class Products{
             const strQry = `
             UPDATE Products
             SET ?
-            WHERE productID = ${req.params.id};
+            WHERE prodID = ${req.params.id};
             `
             db.query(strQry, [data], (err) => { 
                 if (err) throw new Error('Unable to edit a product')

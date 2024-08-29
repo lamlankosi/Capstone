@@ -25,3 +25,7 @@ productRouter.patch('/:id', (req,res)=>{
 productRouter.delete('/:id', (req,res)=> {
     products.deleteProduct(req,res)
 })
+
+export{
+    productRouter
+}
