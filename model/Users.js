@@ -82,7 +82,7 @@ class Users{
                 if (err) {
                     res.json({
                         status: res.statusCode,
-                        msg: 'This email has already been taken, Login'
+                        err: 'This email has already been taken, Login'
                     })
                 } else {
                     const token = createAToken(user)
@@ -95,7 +95,7 @@ class Users{
         } catch (e) {
             res.json({
                 status: 404,
-                msg: e.message
+                err: e.message
             })
         }
     }
