@@ -1,0 +1,143 @@
+<template>
+  <div v-if="$route.name !== 'HomeView'" class="side-navbar" :class="{ 'side-navbar-collapsed': isCollapsed }">
+    <ul>
+      <li class="navbar-toggler-wrapper">
+        <button class="navbar-toggler" type="button" @click="toggleNavbar">
+          <span class="navbar-toggler-icon">
+            <transition name="arrow-fade">
+              <i v-if="!isCollapsed" class="bi bi-arrow-left"></i>
+            </transition>
+            <transition name="arrow-fade">
+              <i v-if="isCollapsed" class="bi bi-arrow-right"></i>
+            </transition>
+          </span>
+        </button>
+      </li>
+      <li class="router-links">
+        <router-link to="/">
+          <i class="bi bi-house-fill"></i>
+          <span v-if="!isCollapsed"> Home</span>
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/about">
+          <i class="bi bi-file-earmark-post"></i>
+          <span v-if="!isCollapsed"> About</span>
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/report">
+          <i class="bi bi-envelope-fill"></i>
+          <span v-if="!isCollapsed"> Report Bug</span>
+        </router-link>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'NavbarComponent',
+  data() {
+    return {
+      isCollapsed: false,
+    };
+  },
+  methods: {
+    toggleNavbar() {
+      this.isCollapsed = !this.isCollapsed;
+    },
+  },
+};
+</script>
+
+<style>
+.side-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: #2c3e50;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: width 0.3s ease;
+}
+
+.side-navbar-collapsed {
+  width: 60px;
+}
+
+.navbar-toggler-wrapper {
+  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navbar-toggler {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.navbar-toggler-icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
+
+.arrow-fade-enter-active, .arrow-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.arrow-fade-enter, .arrow-fade-leave-to {
+  opacity: 0;
+}
+
+.side-navbar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.side-navbar li {
+  margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.side-navbar a {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.side-navbar a i {
+  margin-right: 10px;
+}
+
+.side-navbar a:hover {
+  color: #1abc9c;
+}
+.bi{
+    color:white
+}
+
+@media (max-width: 768px) {
+  .side-navbar {
+    width: 60px;
+  }
+}
+</style>

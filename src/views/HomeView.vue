@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <div class="header">
+      <router-link to="/dashboard">view</router-link>
       <button class="btn btn-primary" @click="showLogin = true">Login</button>
       <button class="btn btn-secondary" @click="showRegister = true">Register</button>
     </div>
@@ -18,7 +19,7 @@
     <login-component v-if="showLogin" @close="showLogin = false" />
     <register-component v-if="showRegister" @close="showRegister = false" />
   </div>
-</template>ww
+</template>
 
 <script>
 import LoginComponent from '@/components/LoginComponent.vue';

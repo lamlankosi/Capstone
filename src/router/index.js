@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import { useCookies } from 'vue3-cookies'
+import ReportView from '@/views/ReportView.vue'
 
 const { cookies } = useCookies()
 
@@ -28,6 +29,11 @@ const routes = [
         next();
       }
     }
+  },
+  {
+    path: '/report',
+    name: 'report',
+    component: ReportView
   }
 ]
 
