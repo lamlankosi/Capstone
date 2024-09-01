@@ -10,7 +10,7 @@
         method="POST"
       >
         <div class="form-group">
-          <label for="first-name">First name*</label>
+          <label for="first-name">First name</label>
           <input type="text" id="first-name" name="first-name" required>
         </div>
         <div class="form-group">
@@ -18,7 +18,7 @@
           <input type="text" id="last-name" name="last-name">
         </div>
         <div class="form-group">
-          <label for="email">Email*</label>
+          <label for="email">Email</label>
           <input type="email" id="email" name="email" required>
         </div>
         <div class="form-group">
@@ -62,10 +62,6 @@ p {
   color: #6c757d;
 }
 
-.department-email {
-  color: #007bff;
-  text-decoration: underline;
-}
 
 .form-container {
   flex: 1;

@@ -1,4 +1,5 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
 *,
 *::after,
 *::before{
@@ -15,7 +16,7 @@
 
 /* APP */
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: Alegreya, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
