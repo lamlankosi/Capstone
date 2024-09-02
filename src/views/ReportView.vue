@@ -110,15 +110,4 @@ textarea {
   background-color: #4c51bf;
 }
 
-@media (max-width: 768px) {
-  .contact-us-container {
-    flex-direction: column;
-    padding-left: 20px; 
-  }
-
-  .content {
-    padding-right: 0;
-    margin-bottom: 20px;
-  }
-}
 </style>
