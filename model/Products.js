@@ -11,7 +11,7 @@ class Products{
                 if(err) throw new Error ('Couldn\'t retrieve products')
                     res.json({
                         status: res.statusCode,
-                        err
+                        results
                     })
             })
         } catch(e){
