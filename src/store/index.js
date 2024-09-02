@@ -37,28 +37,30 @@ export default createStore({
     // Products
     async fetchProducts(context) {
       try {
-        const res = await axios.get(`${APIUrl}products/`)
-        const {result, msg} = await res.data
-        if (result) {
-          context.commit('setProducts', result)
+        const res = await axios.get(`${APIUrl}products/`);
+        const { results, msg } = res.data;
+    
+        if (results) {
+          context.commit('setProducts', results);
         } else {
           toast.error(`${msg}`, {
             autoClose: 2000,
             position: toast.POSITION.TOP_CENTER
-          })
+          });
         }
-      }catch(e){
-        toast.error(`${e.message}`,{
-          autoClose: 2000
-        })
+      } catch (e) {
+        toast.error(`${e.message}`, {
+          autoClose: 2000,
+          position: toast.POSITION.TOP_CENTER
+        });
       }
     },
     async fetchProduct(context, id) {
       try {
         const res = await axios.get(`${APIUrl}products/${id}`)
-        const {result, msg} = await res.data
-        if (result) {
-          context.commit('setProducts', result)
+        const {results, msg} = await res.data
+        if (results) {
+          context.commit('setProducts', results)
         } else {
           toast.error(`${msg}`, {
             autoClose: 3000,
@@ -111,9 +113,9 @@ export default createStore({
     async fetchUsers(context){
       try{
         const res = await axios.get(`${APIUrl}users/`)
-        const {result, msg} = await res.data
-        if(result){
-          context.commit('setUsers', result)
+        const {results, msg} = await res.data
+        if(results){
+          context.commit('setUsers', results)
           } else{
             toast.error(`${msg}`,{
               autoClose: 3000,
@@ -130,9 +132,9 @@ export default createStore({
     async fetchUser(context, id){
       try{
         const res = await axios.get(`${APIUrl}users/${id}`)
-        const {result, msg} = await res.data
-        if (result){
-          context.commit('setUser', result)
+        const {results, msg} = await res.data
+        if (results){
+          context.commit('setUser', results)
           } else{
             toast.error(`${msg}`,{
               autoClose: 3000,

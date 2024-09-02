@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="header">
-      <router-link to="/dashboard">view</router-link>
+      <router-link to="/about">view</router-link>
       <button class="btn btn-primary" @click="showLogin = true">Login</button>
       <button class="btn btn-secondary" @click="showRegister = true">Register</button>
     </div>

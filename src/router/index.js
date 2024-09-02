@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import DashboardView from '@/views/DashboardView.vue'
+import AboutView from '../views/AboutView.vue'
 import { useCookies } from 'vue3-cookies'
 import ReportView from '@/views/ReportView.vue'
 
@@ -18,9 +18,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: DashboardView,
+    path: '/about',
+    name: 'about',
+    component: AboutView,
     beforeEnter: (to, from, next) => {
       const isAuthenticated = !!cookies.get('LegitUser')
       if (!isAuthenticated) {

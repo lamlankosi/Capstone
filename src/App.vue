@@ -1,9 +1,11 @@
 <template>
-    <NavbarComponent/>
-    <main class="main-content">
-      <router-view/>
-    </main>
-  <Footer/>
+    <div class="wrapper">
+      <NavbarComponent/>
+      <main class="main-content">
+        <router-view/>
+      </main>
+    <Footer/>
+    </div>
 </template>
 
 <script>
@@ -20,6 +22,7 @@ export default {
 </script>
 
 <style src="@/assets/css/style.css">
+
 
 </style>
 

@@ -13,24 +13,26 @@
           </span>
         </button>
       </li>
-      <li class="router-links">
-        <router-link to="/">
-          <i class="bi bi-house-fill"></i>
-          <span v-if="!isCollapsed"> Home</span>
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/about">
-          <i class="bi bi-file-earmark-post"></i>
-          <span v-if="!isCollapsed"> About</span>
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/report">
-          <i class="bi bi-envelope-fill"></i>
-          <span v-if="!isCollapsed"> Report Bug</span>
-        </router-link>
-      </li>
+      <div class="router-links">
+        <li>
+          <router-link to="/">
+            <i class="bi bi-house-fill"></i>
+            <span v-if="!isCollapsed"> Home</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/about">
+            <i class="bi bi-file-earmark-post"></i>
+            <span v-if="!isCollapsed"> About</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/report">
+            <i class="bi bi-envelope-fill"></i>
+            <span v-if="!isCollapsed"> Report Bug</span>
+          </router-link>
+        </li>
+      </div>
     </ul>
   </div>
 </template>
@@ -59,15 +61,15 @@ export default {
   width: 200px;
   height: 100vh;
   background-color: #2c3e50;
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between; 
   transition: width 0.3s ease;
+  z-index: 1000;
 }
 
 .side-navbar-collapsed {
-  width: 60px;
+  width: 80px;
 }
 
 .navbar-toggler-wrapper {
@@ -103,11 +105,18 @@ export default {
 
 .side-navbar ul {
   list-style: none;
-  padding: 0;
   margin: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.router-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  flex: 1;
 }
 
 .side-navbar li {
@@ -131,13 +140,14 @@ export default {
 .side-navbar a:hover {
   color: #1abc9c;
 }
-.bi{
-    color:white
+
+.bi {
+  color: white;
 }
 
 @media (max-width: 768px) {
   .side-navbar {
-    width: 60px;
+    width: 30px;
   }
 }
 </style>
