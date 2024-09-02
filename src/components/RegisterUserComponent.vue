@@ -48,5 +48,8 @@ export default {
 </script>
 
 <style scoped>
+.register-form{
+  position: absolute;
+}
 
 </style>
