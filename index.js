@@ -30,7 +30,7 @@ app.use(
     cors()
 )
 
-
+//endpoint for home page
 app.get('^/$|/gamingInventory', (req, res) => {
     res.status(200).sendFile(path.resolve('./static/html/index.html'))
 })
