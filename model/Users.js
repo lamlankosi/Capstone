@@ -6,7 +6,7 @@ class Users{
     fetchUsers(req,res){
         try{
             const strQry = `
-            SELECT firstName, lastName, userAge, Gender, userRole, emailAdd, password, profileURL
+            SELECT userID, firstName, lastName, userAge, Gender, userRole, emailAdd, password, profileURL
             FROM Users;
             `
             db.query(strQry, (err, results)=>{
