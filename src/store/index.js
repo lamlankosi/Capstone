@@ -228,7 +228,7 @@ export default createStore({
           });
           cookies.set('LegitUser', token)
           applyToken(token)
-          router.push({ name: 'dashboard' })
+          router.push({ name: 'about' })
         } else {
           toast.error(`${msg}`, {
             autoClose: 2000,

@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import AboutView from '../views/AboutView.vue'
 import { useCookies } from 'vue3-cookies'
 import ReportView from '@/views/ReportView.vue'
+import AboutView from '@/views/AboutView.vue'
 
 const { cookies } = useCookies()
 
@@ -15,21 +15,16 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
-  {
-    path: '/about',
-    name: 'about',
     component: AboutView,
     beforeEnter: (to, from, next) => {
       const isAuthenticated = !!cookies.get('LegitUser')
       if (!isAuthenticated) {
-        next({ name: 'HomeView' });
+        next({ name: 'HomeView' })
       } else {
-        next();
+        next()
       }
     }
-  },
+  },  
   {
     path: '/report',
     name: 'report',

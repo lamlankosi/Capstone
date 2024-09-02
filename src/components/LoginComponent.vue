@@ -43,10 +43,10 @@ export default {
   position: absolute;
   width: 300px;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent white */
+  background-color: rgba(0, 0, 0, 0.1); 
   border-radius: 10px;
   box-shadow: 0 2px 10px rgb(68, 255, 0);
-  backdrop-filter: blur(10px); /* Blur background */
+  backdrop-filter: blur(10px); 
 }
 
 .close-button {

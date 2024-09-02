@@ -5,10 +5,10 @@
         <button class="navbar-toggler" type="button" @click="toggleNavbar">
           <span class="navbar-toggler-icon">
             <transition name="arrow-fade">
-              <i v-if="!isCollapsed" class="bi bi-arrow-left"></i>
+              <i v-if="!isCollapsed" class="bi bi-arrow-left-circle"></i>
             </transition>
             <transition name="arrow-fade">
-              <i v-if="isCollapsed" class="bi bi-arrow-right"></i>
+              <i v-if="isCollapsed" class="bi bi-arrow-right-circle"></i>
             </transition>
           </span>
         </button>
