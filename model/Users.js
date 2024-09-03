@@ -30,11 +30,11 @@ class Users{
             FROM Users
             WHERE userID = ${req.params.id};
             `
-            db.query(strQry, (err, results)=>{
+            db.query(strQry, (err, result)=>{
                 if(err) throw new Error('Unable to retieve user from the database') 
                     res.json({
                     status: res.statusCode,
-                    results
+                    result
                     })
             }) 
         } catch (e) {
