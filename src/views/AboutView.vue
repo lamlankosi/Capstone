@@ -64,6 +64,7 @@
 
 <script>
 export default{
+  name: 'AboutView',
   computed:{
     products(){
       return this.$store.state.products

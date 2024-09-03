@@ -2,14 +2,10 @@
     <div class="login-form">
       <button class="close-button" @click="$emit('close')"><i class="bi bi-x-circle-fill"></i></button>
       <h2>Login</h2>
-      <form class="login">
         <input type="email" v-model="email" placeholder="Email" required />
         <input type="password" v-model="password" placeholder="Password" required />
         <button class="login-button" @click="login">Login</button>
-
-      </form>
     </div>
-  
 </template>
 
 <script>
@@ -47,6 +43,9 @@ export default {
   border-radius: 10px;
   box-shadow: 0 2px 10px rgb(68, 255, 0);
   backdrop-filter: blur(10px); 
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .close-button {
@@ -66,9 +65,7 @@ export default {
 }
 
 .login {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Space between elements */
+  /* Space between elements */
 }
 
 input[type="password"],
