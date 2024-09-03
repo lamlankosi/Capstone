@@ -8,7 +8,7 @@ userRouter.use(bodyParser.json())
 userRouter.get('/', (req,res) => {
     users.fetchUsers(req,res)
 })
-userRouter.get('/me', (req, res)=>{
+userRouter.get('/:id', (req, res)=>{
     users.fetchUser(req,res)
 })
 userRouter.post('/signUp', (req, res) => { 
