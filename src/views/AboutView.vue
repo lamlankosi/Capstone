@@ -85,25 +85,25 @@ export default {
   name: 'AboutView',
   computed: {
     products() {
-      return this.$store.state.products || [];
+      return this.$store.state.products || []
     },
     users() {
-      return this.$store.state.users || [];
+      return this.$store.state.users || []
     },
     user() {
-      return this.$store.state.user || null;
+      return this.$store.state.user || null
     }
   },
   async mounted() {
-    await this.$store.dispatch('fetchProducts');
-    await this.$store.dispatch('fetchUsers');
+    await this.$store.dispatch('fetchProducts')
+    await this.$store.dispatch('fetchUsers')
     
-    const userId = this.$store.state.user?.userId;
+    const userId = this.$store.state.user?.userId
     if (userId) {
-      await this.$store.dispatch('fetchUser', userId);
+      await this.$store.dispatch('fetchUser', userId)
     }
   }
-};
+}
 </script>
 
 
