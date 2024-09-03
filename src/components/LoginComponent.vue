@@ -64,9 +64,7 @@ export default {
   color: #000;
 }
 
-.login {
-  /* Space between elements */
-}
+
 
 input[type="password"],
 input[type="email"],

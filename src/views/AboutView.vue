@@ -1,89 +1,153 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-  <div class="product-container">
-    <div class="product-title">
-      <h2>products</h2>
+
+    <!-- Check if user data is available -->
+    <div v-if="user" class="logged-in-user">
+      <div class="user-profile">
+        <img :src="user.profileURL" :alt="user.firstName" class="profile-image">
+      </div>
+      <div class="user-info">
+        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+        <p>Age: {{ user.userAge }}</p>
+        <p>Gender: {{ user.Gender }}</p>
+        <p>Role: {{ user.userRole }}</p>
+        <p>Email: {{ user.emailAdd }}</p>
+      </div>
     </div>
-    <div class="products-table">
-      <table>
-        <tr>
-          <th>Product ID</th>
-          <th>Image</th>
-          <th>Product Name</th>
-          <th>Category</th>
-          <th>Description</th>
-          <th>Quantity</th>
-          <th>Amount</th>
-        </tr>
-        <tr v-for="product in products" :key="product.prodID">
-        <td>{{ product.prodID }}</td>
-        <td><img :src="product.prodUrl" :alt="product.prodName" class="product-image"></td>
-        <td>{{ product.prodName }}</td>
-        <td>{{ product.category }}</td>
-        <td>{{ product.description }}</td>
-        <td>{{ product.quantity }}</td>
-        <td>{{ product.amount }}</td>
-      </tr>
-      </table>
+    
+    <!-- Handle case where products are not available -->
+    <div v-if="products.length" class="product-container">
+      <div class="product-title">
+        <h2>Products</h2>
+      </div>
+      <div class="products-table">
+        <table>
+          <tr>
+            <th>Product ID</th>
+            <th>Image</th>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+          </tr>
+          <tr v-for="product in products" :key="product.prodID">
+            <td>{{ product.prodID }}</td>
+            <td><img :src="product.prodUrl" :alt="product.prodName" class="product-image"></td>
+            <td>{{ product.prodName }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>R{{ product.amount }}</td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
-  <div class="user-container">
-    <div class="user-title">
-      Users
+    
+    <!-- Handle case where users are not available -->
+    <div v-if="users.length" class="user-container">
+      <div class="user-title">
+        Users
+      </div>
+      <div class="products-table">
+        <table>
+          <tr>
+            <th>User ID</th>
+            <th>Profile</th>
+            <th>First Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Role</th>
+            <th>Email Address</th>
+            <th>Password</th>
+          </tr>
+          <tr v-for="user in users" :key="user.userID">
+            <td>{{ user.userID }}</td>
+            <td><img :src="user.profileURL" :alt="user.firstName" class="product-image"></td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.userAge }}</td>
+            <td>{{ user.Gender }}</td>
+            <td>{{ user.userRole }}</td>
+            <td>{{ user.emailAdd }}</td>
+            <td>{{ user.password }}</td>
+          </tr>
+        </table>
+      </div>
     </div>
-    <div class="products-table">
-      <table>
-        <tr>
-          <th>User ID</th>
-          <th>Profile</th>
-          <th>firstName</th>
-          <th>Surname</th>
-          <th>Age</th>
-          <th>Gender</th>
-          <th>Role</th>
-          <th>Email Address</th>
-          <th>Password</th>
-        </tr>
-        <tr v-for="user in users" :key="user.userID">
-          <td>{{ user.userID }}</td>
-          <td><img :src="user.profileURL" :alt="user.firstName" class="product-image"></td>
-          <td>{{ user.firstName }}</td>
-          <td>{{ user.lastName }}</td>
-          <td>{{ user.userAge }}</td>
-          <td>{{ user.Gender }}</td>
-          <td>{{ user.userRole }}</td>
-          <td>{{ user.emailAdd }}</td>
-          <td>{{ user.password }}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
   </div>
 </template>
 
 <script>
-export default{
+export default {
   name: 'AboutView',
-  computed:{
-    products(){
-      return this.$store.state.products
+  computed: {
+    products() {
+      return this.$store.state.products || [];
     },
-    users(){
-      return this.$store.state.users
+    users() {
+      return this.$store.state.users || [];
+    },
+    user() {
+      return this.$store.state.user || null;
     }
   },
-  mounted(){
-    this.$store.dispatch('fetchProducts'),
-    this.$store.dispatch('fetchUsers')
+  async mounted() {
+    await this.$store.dispatch('fetchProducts');
+    await this.$store.dispatch('fetchUsers');
+    
+    const userId = this.$store.state.user?.userId;
+    if (userId) {
+      await this.$store.dispatch('fetchUser', userId);
+    }
   }
- 
-}
-
+};
 </script>
 
-<style>.about {
-  padding-left: 15rem; 
+
+<style>
+.about {
+  padding-left: 15rem;
+}
+
+.logged-in-user {
+  display: flex;
+  align-items: center;
+  width: 93%;
+  margin-bottom: 2rem;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-profile {
+  margin-right: 20px;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.user-info p {
+  margin: 4px 0;
+  font-size: 18px;
+  color: #555;
 }
 
 .products-table {
@@ -116,15 +180,13 @@ export default{
   border-radius: 4px;
 }
 
-/* Add a media query for smaller screens */
 @media (max-width: 768px) {
   .about {
-    padding-left: 0; /* Remove padding on small screens */
+    padding-left: 0;
   }
 
   .products-table table {
-    min-width: 100%; /* Ensure table fits on small screens */
+    min-width: 100%;
   }
 }
-
 </style>
