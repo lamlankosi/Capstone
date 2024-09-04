@@ -32,6 +32,12 @@
             <span v-if="!isCollapsed"> Report Bug</span>
           </router-link>
         </li>
+        <li>
+          <router-link to="/admin">
+            <i class="bi bi-building-fill"></i>
+            <span v-if="!isCollapsed"> Admin</span>
+          </router-link>
+        </li>
       </div>
     </ul>
   </div>

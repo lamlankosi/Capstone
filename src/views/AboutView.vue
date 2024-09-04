@@ -1,9 +1,12 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <div class="content">
+      Welcome to Lamla Gaming Store, your ultimate destination for all things gaming! We specialize in offering a wide range of video game consoles and games to cater to every type of gamer. Whether you're a fan of the latest cutting-edge systems or looking for classic retro consoles, we’ve got you covered. Our extensive catalog includes the hottest new releases, exclusive titles, and beloved classics across all major platforms. Owned and managed by Lamlankosi Nomnganga, who oversees every aspect of the business, we're dedicated to providing a seamless shopping experience with competitive prices, fast shipping, and exceptional customer service. Dive into the world of gaming with us and elevate your entertainment to the next level!
+    </div>
 
     <!-- user -->
-    <div v-if="user" class="logged-in-user">
+    <!-- <div v-if="user" class="logged-in-user">
       <div class="user-profile">
         <img :src="user.profileURL" :alt="user.firstName" class="profile-image">
       </div>
@@ -14,10 +17,10 @@
         <p><span class="fw-bold">Role:</span>{{ user.userRole }}</p>
         <p><span class="fw-bold">Email:</span> {{ user.emailAdd }}</p>
       </div>
-    </div>
+    </div> -->
     
     <!-- products -->
-    <div v-if="products.length" class="product-container">
+    <!-- <div v-if="products.length" class="product-container">
       <div class="product-title">
         <h2>Products</h2>
       </div>
@@ -44,9 +47,10 @@
         </table>
       </div>
     </div>
+     -->
     
-<!-- user -->
-    <div v-if="users.length" class="user-container">
+     <!-- user -->
+    <!-- <div v-if="users.length" class="user-container">
       <div class="user-title">
         Users
       </div>
@@ -76,7 +80,7 @@
           </tr>
         </table>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -110,6 +114,11 @@ export default {
 <style>
 .about {
   padding-left: 15rem;
+  background-image: url(https://lamlankosi.github.io/eCommerce-Images/gamingBackground.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  color: #f0f0f0;
 }
 
 .logged-in-user {
@@ -180,13 +189,5 @@ export default {
   border-radius: 4px;
 }
 
-@media (max-width: 768px) {
-  .about {
-    padding-left: 0;
-  }
 
-  .products-table table {
-    min-width: 100%;
-  }
-}
 </style>

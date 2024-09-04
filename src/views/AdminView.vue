@@ -1,9 +1,9 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="admin">
+    <h1>Admin Page</h1>
 
     <!-- user -->
-    <div v-if="user" class="logged-in-user">
+    <!-- <div v-if="user" class="logged-in-user">
       <div class="user-profile">
         <img :src="user.profileURL" :alt="user.firstName" class="profile-image">
       </div>
@@ -14,7 +14,7 @@
         <p><span class="fw-bold">Role:</span>{{ user.userRole }}</p>
         <p><span class="fw-bold">Email:</span> {{ user.emailAdd }}</p>
       </div>
-    </div>
+    </div> -->
     
     <!-- products -->
     <div v-if="products.length" class="product-container">
@@ -48,7 +48,7 @@
 <!-- user -->
     <div v-if="users.length" class="user-container">
       <div class="user-title">
-        Users
+        <h2>Users</h2>
       </div>
       <div class="products-table">
         <table>
@@ -90,25 +90,25 @@ export default {
     users() {
       return this.$store.state.users || []
     },
-    user() {
-      return this.$store.state.user || null
-    }
+    // user() {
+    //   return this.$store.state.user || null
+    // }
   },
   async mounted() {
     await this.$store.dispatch('fetchProducts')
     await this.$store.dispatch('fetchUsers')
     
-    const userId = this.$store.state.user?.userId
-    if (userId) {
-      await this.$store.dispatch('fetchUser', userId)
-    }
+    // const userId = this.$store.state.user?.userId
+    // if (userId) {
+    //   await this.$store.dispatch('fetchUser', userId)
+    // }
   }
 }
 </script>
 
 
 <style>
-.about {
+.admin {
   padding-left: 15rem;
 }
 
@@ -181,7 +181,7 @@ export default {
 }
 
 @media (max-width: 768px) {
-  .about {
+  .admin {
     padding-left: 0;
   }
 
