@@ -34,7 +34,7 @@ class Users{
                 if(err) throw new Error('Unable to retieve user from the database') 
                     res.json({
                     status: res.statusCode,
-                    result
+                    result:result[0]
                     })
             }) 
         } catch (e) {
