@@ -18,6 +18,7 @@ export default {
 <style>
 .Card{
     width: 16rem;
+    background: brown;
 }
 
 </style>

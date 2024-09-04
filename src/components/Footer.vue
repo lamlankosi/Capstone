@@ -23,7 +23,7 @@ export default {
 
 
 .container-fluid {
-    background: greenyellow;
+    background: rgb(99, 243, 3);
     color: white;
     position: fixed;
     bottom: 0;
