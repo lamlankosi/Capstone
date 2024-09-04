@@ -1,11 +1,13 @@
 <template>
-    <div class="login-form">
-      <button class="close-button" @click="$emit('close')"><i class="bi bi-x-circle-fill"></i></button>
-      <h2>Login</h2>
-        <input type="email" v-model="email" placeholder="Email" required />
-        <input type="password" v-model="password" placeholder="Password" required />
-        <button class="login-button" @click="login">Login</button>
-    </div>
+  <div class="login-form">
+    <button class="close-button" @click="$emit('close')">
+      <i class="bi bi-x-circle-fill"></i>
+    </button>
+    <h2>Login</h2>
+    <input type="email" v-model="email" placeholder="Email" required />
+    <input type="password" v-model="password" placeholder="Password" required />
+    <button class="login-button" @click="login">Login</button>
+  </div>
 </template>
 
 <script>
@@ -20,13 +22,20 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['loginUser']),
+    ...mapActions(['loginUser', 'fetchUser']),
     async login() {
       const payload = {
         emailAdd: this.email,
         password: this.password,
       };
-      await this.loginUser(payload);
+      const response = await this.loginUser(payload);
+
+      if (response && response.token) {
+        // Fetch the user data after logging in
+        await this.fetchUser(response.user.userID);
+        // Redirect to the About page
+        this.$router.push({ name: 'about' });
+      }
       this.$emit('close');
     },
   },

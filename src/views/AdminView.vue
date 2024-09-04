@@ -82,7 +82,7 @@
 
 <script>
 export default {
-  name: 'AboutView',
+  name: 'AdminView',
   computed: {
     products() {
       return this.$store.state.products || []
