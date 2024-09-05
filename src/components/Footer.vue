@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="footer">
         <div class="row">
             <p class="lead">
                 Lamlankosi Nomnganga &copy; <span id="currYear"> {{ cYear  }}</span>
@@ -22,15 +22,15 @@ export default {
 <style scoped>
 
 
-.container-fluid {
+.footer {
     background: rgb(99, 243, 3);
     color: white;
-    position: fixed;
+    /* position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     text-align: center;
-    padding: 10px 0;
+    padding: 10px 0; */
 }
 
 </style>

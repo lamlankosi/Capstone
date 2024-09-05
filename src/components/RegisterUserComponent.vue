@@ -8,6 +8,7 @@
     <input type="password" v-model="password" placeholder="Password" required />
     <input type="text" v-model="Gender" placeholder="Gender" required />
     <input type="text" v-model="userAge" placeholder="Age" required />
+    <input type="text" v-model="profileURL" placeholder="ImageURL">
     <button class="register-button" @click="register">Register</button>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="about justify-content-center my-3">
     <h1 class="display-2">This is an about page</h1>
     <div class="row">
       <div class="content">
@@ -36,9 +36,10 @@
 </script>
 
 
-<style>
+<style scoped>
 .about {
   padding-left: 15rem;
+  padding-right: 10rem;
   background-image: url(https://lamlankosi.github.io/eCommerce-Images/gamingBackground.jpg);
   background-size: cover;
   background-repeat: no-repeat;

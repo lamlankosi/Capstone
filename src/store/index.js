@@ -110,6 +110,25 @@ export default createStore({
         })
       }
     },
+    async updateProduct(context, payload) {
+      try {
+        const { msg } = await (await axios.put(`${APIUrl}products/${payload.id}`,
+          payload)).data
+          if (msg) {
+            context.dispatch('fetchProducts')
+            toast.success(`${msg}`, {
+            autoClose: 3000,
+            position: toast.POSITION.TOP_CENTER
+            })
+          }
+            } catch (e) {
+              toast.error(`${e.message}`, {
+                autoClose: 3000,
+                position: toast.POSITION.TOP_CENTER
+        })
+      }
+     },
+
 
     // Users
     async fetchUsers(context) {
