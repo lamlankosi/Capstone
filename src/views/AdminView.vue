@@ -1,11 +1,11 @@
 <template>
-  <div class="admin">
+<div class="admin">
     <h1>Admin Page</h1>
 
     <!-- user -->
     <div v-if="user" class="logged-in-user">
       <div class="user-profile">
-        <img :src="user.profileURL" :alt="user.firstName" class="profile-image">
+        <img :src="user.profileURL" :alt="user.firstName" class="profile-image" loading="lazy">
       </div>
       <div class="user-info">
         <h2 class="fw-bold">{{ user.firstName }} {{ user.lastName }}</h2>
@@ -21,14 +21,20 @@
       <div class="product-title">
         <h2>Products</h2>
         <div class="row gap-2">
-          <div class="col-md-3">
-            <h5 class="search">Search products</h5>
+
+        <div class="d-flex flex-wrap gap-3">
+          <div class="col-md-2">
             <input 
               type="text" 
               v-model="searchQuery" 
               class="form-control" 
               placeholder="Search by name or category"
             >
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-primary" @click="showAddProductModal = true">
+              Add Product
+            </button>
           </div>
         </div>
       </div>
@@ -49,17 +55,17 @@
           </tr>
           <tr v-else v-for="product in searchProducts" :key="product.prodID">
             <td>{{ product.prodID }}</td>
-            <td><img :src="product.prodUrl" :alt="product.prodName" class="product-image"></td>
+            <td><img :src="product.prodUrl" :alt="product.prodName" class="product-image" loading="lazy"></td>
             <td>{{ product.prodName }}</td>
             <td>{{ product.category }}</td>
             <td>{{ product.description }}</td>
             <td>{{ product.quantity }}</td>
             <td>R{{ product.amount }}</td>
             <td class="actions">
-              <!-- Edit product (trigger a method to open an edit modal or form) -->
-              <i class="bi bi-pencil" @click="editProduct(product)"></i>
-              <!-- Delete product -->
-              <i class="bi bi-trash" @click="deleteProduct(product.prodID)"></i>
+              <button @click="editProduct(product)"><i class="bi bi-pencil" ></i></button>
+              <button @click="deleteProduct(product.prodID)"><i class="bi bi-trash" ></i></button>
+              
+          
             </td>
           </tr>
         </table>
@@ -79,6 +85,11 @@
               class="form-control" 
               placeholder="Search by first Name or Surname"
             >
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-primary" @click="showAddUserModal = true">
+              Add User
+            </button>
           </div>
       </div>
       <div class="products-table">
@@ -100,7 +111,7 @@
           </tr>
           <tr v-else v-for="user in searchUsers" :key="user.userID">
             <td>{{ user.userID }}</td>
-            <td><img :src="user.profileURL" :alt="user.firstName" class="product-image"></td>
+            <td><img :src="user.profileURL" :alt="user.firstName" class="product-image" loading="lazy"></td>
             <td>{{ user.firstName }}</td>
             <td>{{ user.lastName }}</td>
             <td>{{ user.userAge }}</td>
@@ -109,25 +120,43 @@
             <td>{{ user.emailAdd }}</td>
             <td>{{ user.password }}</td>
             <td class="actions">
-              <!-- Edit user -->
-              <i class="bi bi-pencil" @click="editUser(user)"></i>
-              <!-- Delete user -->
-              <i class="bi bi-trash-fill" @click="deleteUser(user.userID)"></i>
+              
+              <button @click="editUser(user)"><i class="bi bi-pencil" ></i></button>
+              <button @click="deleteUser(user.userID)"><i class="bi bi-trash-fill"></i></button>
             </td>
           </tr>
         </table>
       </div>
     </div>
   </div>
+  <AddProductModal
+      :visible="showAddProductModal"
+      @update:visible="showAddProductModal = $event"
+      @add-product="handleAddProduct"
+    />
+
+    <AddUserModal :visible="showAddUserModal" @update:visible="showAddUserModal = $event" @add-user="handleAddUser"/>
+
+</div>
 </template>
 
 <script>
+import AddProductModal from '@/components/AddProductModal.vue'
+import AddUserModal from '@/components/AddUserModal.vue';
 export default {
   name: 'AdminView',
+  components:{
+    AddProductModal,
+    AddUserModal
+  },
   data() {
     return {
       searchQuery: '',
       searchQueryuser: '',
+      showAddProductModal: false,
+      selectedProduct: null,
+      showAddUserModal: false,
+      selectUser: null,
     }
   },
   computed: {
@@ -191,11 +220,11 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped>
-.bi{
-  color: black;
+button{
+  background: black;
+  border-radius: 10px;
 }
 </style>
