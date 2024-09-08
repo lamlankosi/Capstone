@@ -1,12 +1,25 @@
 import { orders } from "../model/index.js"
 import bodyParser from "body-parser"
 import { express } from "./userController.js"
-import { Router } from "express"
 
 const orderRouter = express.Router()
 
+orderRouter.use(bodyParser.json())
+
 orderRouter.get('/', (req,res) =>{
     orders.fetchOrders(req,res)
+})
+orderRouter.get('/:id', (req,res)=>{
+    orders.fetchOrder(req,res)
+})
+orderRouter.post('/add',(req,res)=>{
+    orders.addOrder(req,res)
+})
+orderRouter.patch('/:id', (req,res)=>{
+    orders.updateOrder(req,res)
+}) 
+orderRouter.delete('/:id', (res,req)=> {
+    orders.deleteOrder(req,res)
 })
 export{
     orderRouter
