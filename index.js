@@ -3,6 +3,7 @@ import cors from 'cors'
 import 'dotenv/config'
 import { express, userRouter } from './controller/userController.js'
 import {productRouter} from './controller/prodController.js'
+import {orderRouter} from './controller/orderController.js'
 
 const app = express()
 const port = +process.env.PORT || 4000
@@ -30,6 +31,7 @@ app.use(
 
 app.use('/users', userRouter)
 app.use('/products', productRouter )
+app.use('/orders', orderRouter)
 //endpoint for home page
 app.get('^/$|/gamingInventory', (req, res) => {
     res.status(200).sendFile(path.resolve('./static/html/index.html'))
