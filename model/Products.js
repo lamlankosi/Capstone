@@ -4,7 +4,7 @@ class Products{
     fetchProducts(req, res){
         try{
             const strQry =`
-            SELECT prodID, prodName, category, description, quantity, amount, prodUrl
+            SELECT prodID, prodName, category, description, price, stock, prodUrl, addedIn
             FROM Products
             `
             db.query(strQry, (err, results) => {
@@ -24,7 +24,7 @@ class Products{
     fetchProduct(req,res){
         try{
             const strQry =`
-            SELECT prodName, Category, description, quantity, amount, prodUrl
+            SELECT prodID,prodName, Category, description, price, stock, prodUrl,addedIn
             FROM Products
             WHERE prodID= ${req.params.id}
             `
@@ -70,7 +70,7 @@ class Products{
             WHERE prodID = ${req.params.id};`
     
             db.query(strQry, (err) => {
-                if(err) throw new Error ('Unable to delete a product')
+                if(err) throw new Error (err)
                     res.json({
                         status: res.statusCode,
                         msg: 'Product has been removed successfully'

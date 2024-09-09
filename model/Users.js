@@ -6,11 +6,11 @@ class Users{
     fetchUsers(req,res){
         try{
             const strQry = `
-            SELECT userID, firstName, lastName, userAge, Gender, userRole, emailAdd, password, profileURL
+            SELECT userID, username, password, gender, emailAdd, role,imageURL, createdAt
             FROM Users;
             `
             db.query(strQry, (err, results)=>{
-                if(err) throw new Error('Unable to retieve users from the database') 
+                if(err) throw new Error(err) 
                     res.json({
                     status: res.statusCode,
                     results
@@ -26,7 +26,7 @@ class Users{
     fetchUser(req, res){
         try{
             const strQry = `
-            SELECT firstName, lastName, userAge, Gender, userRole, emailAdd, password, profileURL
+            SELECT userID, username, password, gender, Gender, emailAdd, role,imageURL, createdAt, 
             FROM Users
             WHERE userID = ${req.params.id};
             `
@@ -129,7 +129,7 @@ class Users{
         try {
             const { emailAdd, password } = req.body
             const strQry = `
-            SELECT userID, firstName, lastName, userAge, Gender, emailAdd, password, userRole, profileURL
+            SELECT userID, username, password, gender, Gender, emailAdd, role,imageURL, createdAt,
             FROM Users
             WHERE emailAdd = '${emailAdd}';
             `

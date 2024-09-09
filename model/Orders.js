@@ -4,7 +4,7 @@ class Orders{
     fetchOrders(req,res){
        try{
         const strQry =`
-        SELECT orderID, firstName, emailAdd, prodID
+        SELECT orderID, customerID, orderDate, totalAmount, status
         FROM Orders
         `
         db.query(strQry, (err, results)=>{
@@ -24,7 +24,7 @@ class Orders{
     fetchOrder(req,res){
     try{
         const strQry=`
-        SELECT orderID, firstName, emailAdd, prodID
+        SELECT orderID, customerID, orderDate, totalAmount, status
         FROM Orders
         WHERE orderID=${req.params.id}
         `
