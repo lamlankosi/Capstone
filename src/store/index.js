@@ -16,7 +16,9 @@ export default createStore({
     users: null,
     user: null,
     products: null,
-    product: null
+    product: null,
+    orders: null,
+    order: null
   },
   getters: {
 
@@ -33,6 +35,12 @@ export default createStore({
     },
     setProduct(state, value) {
       state.product = value
+    },
+    setOrders(state, value) {
+      state.orders = value
+    },
+    setOrder(state, value) {
+      state.orders = value
     }
   },
   actions: {
@@ -127,8 +135,6 @@ export default createStore({
         });
       }
     },
-    
-
 
     // Users
     async fetchUsers(context) {

@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <NavbarComponent/>
-    <main class="main-content">
+    <main class="main-content ">
       <router-view/>
     </main>
   <Footer/>

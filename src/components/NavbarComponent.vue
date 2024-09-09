@@ -55,11 +55,15 @@ export default {
   data() {
     return {
       isCollapsed: false,
+      isDropdownOpen: false, // New state for dropdown
     };
   },
   methods: {
     toggleNavbar() {
       this.isCollapsed = !this.isCollapsed;
+    },
+    toggleDropdown() {
+      this.isDropdownOpen = !this.isDropdownOpen;
     },
   },
 };
@@ -156,6 +160,38 @@ export default {
 .bi {
   color: white;
 }
+.dropdown {
+  position: relative;
+}
 
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #34495e;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
+.dropdown-menu li {
+  padding: 10px;
+}
+
+.dropdown-menu li a {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.dropdown-menu li:hover {
+  background-color: #1abc9c;
+}
+
+.dropdown-menu li a:hover {
+  color: white;
+}
 </style>
