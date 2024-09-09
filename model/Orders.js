@@ -1,7 +1,7 @@
 import {connection as db } from '../config/index.js'
 
 class Orders{
-    fetchOrders(){
+    fetchOrders(req,res){
        try{
         const strQry =`
         SELECT orderID, firstName, emailAdd, prodID
@@ -21,12 +21,12 @@ class Orders{
         })
        } 
     }
-    fetchOrder(){
+    fetchOrder(req,res){
     try{
         const strQry=`
         SELECT orderID, firstName, emailAdd, prodID
         FROM Orders
-        WHERE orderID=${req,params.id}
+        WHERE orderID=${req.params.id}
         `
         db.query(strQry, (err, result) =>{
             if(err) throw new Error (err)
@@ -42,7 +42,7 @@ class Orders{
         })
     }
     }
-    addOrder(){
+    addOrder(req,res){
         try{
             let data = req.body
             const strQry=`
@@ -63,13 +63,13 @@ class Orders{
             })
         }
     }
-    updateOrder(){
+    updateOrder(req,res){
         try{
             let data = req.body
             const strQry = `
             UPDATE Orders
             SET ?
-            WHERE = ${req.params.id}
+            WHERE orderID = ${req.params.id}
             `
             db.query(strQry, [data], (err) =>{
                 if(err) throw new Error(err)
@@ -80,17 +80,17 @@ class Orders{
             })
         }catch(e){
             res.json({
-                status: res.statusCode,
+                status: 404,
                 msg: e.message
             })
         }
     }
-    deleteOrder(){
+    deleteOrder(req,res) {
         try{
             const strQry=`
             DELETE
             FROM Orders
-            WHERE orderID=${req.params.id}`
+            WHERE orderID = ${req.params.id};`
             db.query(strQry, (err)=>{
                 if(err) throw new Error (err)
                     res.json({
@@ -98,7 +98,7 @@ class Orders{
                         msg: 'Order has been deleted'
                     })
             })
-        }catch(e){
+        } catch (e) {
             res.json({
                 status:404,
                 msg: e.message

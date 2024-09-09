@@ -111,7 +111,7 @@ class Users{
             WHERE userID = ${req.params.id}
             `
             db.query(strQry, [data], (err) => {
-                if (err) throw new Error('Couldn\'t update a user')
+                if (err) throw new Error(err)
                 res.json({
                     status: res.statusCode,
                     msg: 'The user details was updated.'

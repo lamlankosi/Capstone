@@ -18,7 +18,7 @@ orderRouter.post('/add',(req,res)=>{
 orderRouter.patch('/:id', (req,res)=>{
     orders.updateOrder(req,res)
 }) 
-orderRouter.delete('/:id', (res,req)=> {
+orderRouter.delete('/:id', (req,res)=> {
     orders.deleteOrder(req,res)
 })
 export{
