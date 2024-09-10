@@ -4,8 +4,10 @@ class Orders{
     fetchOrders(req,res){
        try{
         const strQry =`
-        SELECT orderID, customerID, orderDate, totalAmount, status
-        FROM Orders
+        SELECT o.orderID, o.orderDate, u.firstName, u.emailAdd, p.prodName,o.totalAmount, o.status
+        FROM Orders o
+        INNER JOIN Users u ON o.userID = u.userID
+        INNER JOIN Products p ON o.prodID = p.prodID;
         `
         db.query(strQry, (err, results)=>{
             if(err) throw new Error('Unable to fetch Orders')
@@ -24,8 +26,10 @@ class Orders{
     fetchOrder(req,res){
     try{
         const strQry=`
-        SELECT orderID, customerID, orderDate, totalAmount, status
-        FROM Orders
+        SELECT o.orderID, o.orderDate, u.firstName, u.emailAdd, p.prodName,o.totalAmount, o.status
+        FROM Orders o
+        INNER JOIN Users u ON o.userID = u.userID
+        INNER JOIN Products p ON o.prodID = p.prodID
         WHERE orderID=${req.params.id}
         `
         db.query(strQry, (err, result) =>{
