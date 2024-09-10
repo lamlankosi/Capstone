@@ -1,5 +1,5 @@
 <template>
-  <div class="about justify-content-center my-3">
+  <div>
     <h1 class="display-2">This is an about page</h1>
     <div class="row">
       <div class="content">

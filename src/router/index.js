@@ -26,10 +26,21 @@ const routes = [
     path: '/report',
     name: 'report',
     component: ()=> import('@/views/ReportView.vue')
-  },{
-    path: '/admin',
-    name: 'admin',
-    component: () => import('@/views/AdminView.vue')
+  },
+  {
+    path: '/users',
+    name: 'users',
+    component: () => import('@/views/UsersView.vue')
+  },
+  {
+    path:'/products',
+    name:'products',
+    component: () => import('@/views/ProductsView.vue')
+  },
+  {
+    path: '/orders',
+    name: 'orders',
+    component: () => import('@/views/OrdersView.vue')
   }
 ]
 

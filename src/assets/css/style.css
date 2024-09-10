@@ -11,7 +11,15 @@
 ::-webkit-scrollbar{
   display: none;
 }
+.main-content {
+  margin-left: 200px; 
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
 
+.side-navbar-collapsed + .main-content {
+  margin-left: 80px;
+}
 
 /* APP */
 #app {
@@ -43,11 +51,9 @@ main{
 }
 
 
-/* Admin */
 
-.admin {
-  padding-left: 15rem;
-}
+
+
 
 .logged-in-user {
   display: flex;

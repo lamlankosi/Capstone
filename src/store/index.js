@@ -156,7 +156,6 @@ export default createStore({
         })
       }
     },
-
     async fetchUser(context, id) {
       try {
         const { result, msg } = await (await axios.get(`${APIUrl}users/${id}`)).data;
@@ -175,7 +174,6 @@ export default createStore({
         });
       }
     },    
-   
     async registerUser(context, payload) {
       try {
         const res = await axios.post(`${APIUrl}users/signUp`, payload)
@@ -270,7 +268,46 @@ export default createStore({
       }
       return null;
     },
-    
+    // orders
+    async fetchOrders(context){
+      try {
+        const res = await axios.get(`${APIUrl}orders`)
+        const { results, msg } = res.data
+
+        if (results) {
+          context.commit('setOrders', results)
+        } else {
+          toast.error(`${msg}`, {
+            autoClose: 2000,
+            position: toast.POSITION.TOP_CENTER
+          })
+        }
+      } catch (e) {
+        toast.error(`${e.message}`, {
+          autoClose: 2000,
+          position: toast.POSITION.TOP_CENTER
+        })
+      }
+    },
+    async fetchOrder(context, id){
+      try {
+        const res = await axios.get(`${APIUrl}orders/${id}`)
+        const { result, msg } = res.data
+        if (result) {
+          context.commit('setOrder', result)
+        } else {
+          toast.error(`${msg}`, {
+            autoClose: 2000,
+            position: toast.POSITION.TOP_CENTER
+          })
+        }
+      } catch (e) {
+        toast.error(`${e.message}`, {
+          autoClose: 2000,
+          position: toast.POSITION.TOP_CENTER
+        })
+      }
+    }
 
   },
   modules: {
