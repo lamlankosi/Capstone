@@ -1,117 +1,120 @@
 <template>
     <div class="admin">
-        <h1>Products Page</h1>
-
-
-        <!-- products -->
-        <div class="product-container">
-            <div class="product-title">
-                <h2>Products</h2>
-                <div class="row gap-2">
-
-                    <div class="d-flex flex-wrap gap-3">
-                        <div class="col-md-2">
-                            <input type="text" v-model="searchQuery" class="form-control"
-                                placeholder="Search by name or category">
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-primary" @click="showAddProductModal = true">
-                                Add Product
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="products-table">
-                    <table>
-                        <tr>
-                            <th>Product ID</th>
-                            <th>Image</th>
-                            <th>Product Name</th>
-                            <th>Category</th>
-                            <th>Description</th>
-                            <th>Stock</th>
-                            <th>Amount</th>
-                            <th>Actions</th>
-                        </tr>
-                        <tr v-if="searchProducts.length === 0">
-                            <td colspan="7" class="no-products">Product not provided</td>
-                        </tr>
-                        <tr v-else v-for="product in searchProducts" :key="product.prodID">
-                            <td>{{ product.prodID }}</td>
-                            <td><img :src="product.prodUrl" :alt="product.prodName" class="product-image"
-                                    loading="lazy"></td>
-                            <td>{{ product.prodName }}</td>
-                            <td>{{ product.category }}</td>
-                            <td>{{ product.description }}</td>
-                            <td>{{ product.stock }}</td>
-                            <td>R{{ product.price }}</td>
-                            <td class="actions">
-                                <button @click="editProduct(product)"><i class="bi bi-pencil"></i></button>
-                                <button @click="deleteProduct(product.prodID)"><i class="bi bi-trash"></i></button>
-
-
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+      <h1>Products Page</h1>
+  
+      <!-- products -->
+      <div class="product-container">
+        <div class="product-title">
+          <h2>Products</h2>
+          <div class="row gap-2">
+            <div class="d-flex flex-wrap gap-3">
+              <div class="col-md-2">
+                <input type="text" v-model="searchQuery" class="form-control" placeholder="Search by name or category" />
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-primary" @click="showAddProductModal = true">
+                  Add Product
+                </button>
+              </div>
             </div>
-
-            <!-- users -->
-
+          </div>
+          <div class="products-table">
+            <table>
+              <tr>
+                <th>Product ID</th>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Stock</th>
+                <th>Amount</th>
+                <th>Actions</th>
+              </tr>
+              <tr v-if="searchProducts.length === 0">
+                <td colspan="7" class="no-products">Product not provided</td>
+              </tr>
+              <tr v-else v-for="product in searchProducts" :key="product.prodID">
+                <td>{{ product.prodID }}</td>
+                <td><img :src="product.prodUrl" :alt="product.prodName" class="product-image" loading="lazy" /></td>
+                <td>{{ product.prodName }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.stock }}</td>
+                <td>R{{ product.price }}</td>
+                <td class="actions">
+                  <button @click="showEditProduct(product)"><i class="bi bi-pencil"></i></button>
+                  <button @click="deleteProduct(product.prodID)"><i class="bi bi-trash"></i></button>
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
-        <AddProductModal :visible="showAddProductModal" @update:visible="showAddProductModal = false" @add-product="handleAddProduct" />
-    </div>
-</template>
+      </div>
+  
+      <!-- Add Product Modal -->
+      <AddProductModal :visible="showAddProductModal" @update:visible="showAddProductModal = false" @add-product="handleAddProduct" />
+  
+      <!-- Edit Product Modal -->
+      <EditProductModal :visible="showEditProductModal" :product="selectedProduct" @update:visible="showEditProductModal = false" @update-product="handleUpdateProduct" />
 
-<script>
-import AddProductModal from '@/components/AddProductModal.vue'
-export default {
-    name: 'AdminView',
+ </div>
+  </template>
+  
+  <script>
+  import AddProductModal from '@/components/AddProductModal.vue'
+  import EditProductModal from '@/components/EditProductModal.vue'
+  
+  export default {
+    name: 'ProductsView',
     components: {
-        AddProductModal,
+      AddProductModal,
+      EditProductModal,
     },
     data() {
-        return {
-            searchQuery: '',
-            showAddProductModal: false,
-        }
+      return {
+        searchQuery: '',
+        showAddProductModal: false,
+        showEditProductModal: false,
+        selectedProduct: null,
+      };
     },
     computed: {
-        products() {
-            return this.$store.state.products || []
-        },
-        searchProducts() {
-            return this.products.filter(product => {
-                const search = this.searchQuery.toLowerCase()
-                return (
-                    product.prodName.toLowerCase().includes(search) ||
-                    product.category.toLowerCase().includes(search)
-                )
-            })
-        },
-
+      products() {
+        return this.$store.state.products || [];
+      },
+      searchProducts() {
+        return this.products.filter((product) => {
+          const search = this.searchQuery.toLowerCase();
+          return (
+            product.prodName.toLowerCase().includes(search) ||
+            product.category.toLowerCase().includes(search)
+          );
+        });
+      },
     },
     methods: {
-        handleAddProduct(product) {
-            this.$store.dispatch('addAProduct', product);
-        },
-        // Trigger the store action to delete a product
-        async deleteProduct(productID) {
-            await this.$store.dispatch('deleteProduct', productID)
-        },
-        // Open a modal or form to edit a product
-        editProduct(product) {
-            // Logic to open the modal and fill it with product details goes here
-            // For example, you could store the product in a local data property for editing
-            this.$store.commit('setProduct', product)
-            // Then open the modal (you'd need a modal component)
-        },
+      handleAddProduct(product) {
+        this.$store.dispatch('addAProduct', product);
+      },
+      // Show the edit modal
+      showEditProduct(product) {
+  this.selectedProduct = product;
+  this.showEditProductModal = true;
+},
+      // Update the product
+      handleUpdateProduct(updatedProduct) {
+        this.$store.dispatch('updateProduct', updatedProduct);
+      },
+      async deleteProduct(productID) {
+        await this.$store.dispatch('deleteProduct', productID);
+      },
     },
     async mounted() {
-        await this.$store.dispatch('fetchProducts')
-    }
-}
-</script>
+      await this.$store.dispatch('fetchProducts');
+    },
+  };
+  </script>
+  
 
 <style scoped>
 button {

@@ -16,12 +16,12 @@
           <input v-model="newProduct.description" type="text" id="description" required>
         </div>
         <div class="form-group">
-          <label for="quantity">Quantity</label>
-          <input v-model="newProduct.quantity" type="number" id="quantity" required>
+          <label for="stock">Quantity</label>
+          <input v-model="newProduct.stock" type="number" id="stock" required>
         </div>
         <div class="form-group">
-          <label for="amount">Amount (R)</label>
-          <input v-model="newProduct.amount" type="number" id="amount" required>
+          <label for="price">price (R)</label>
+          <input v-model="newProduct.price" type="number" id="price" required>
         </div>
         <div class="form-group">
           <label for="prodUrl">Product Image URL</label>
@@ -48,8 +48,8 @@ export default {
         prodName: '',
         category: '',
         description: '',
-        quantity: 0,
-        amount: 0,
+        stock: 0,
+        price: 0,
         prodUrl: ''
       }
     };
