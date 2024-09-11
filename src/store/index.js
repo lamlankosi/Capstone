@@ -120,7 +120,7 @@ export default createStore({
     },
     async updateProduct(context, payload) {
       try {
-        const { msg } = await (await axios.put(`${APIUrl}products/${payload.id}`, payload)).data;
+        const { msg } = await (await axios.patch(`${APIUrl}products/${payload.id}`, payload.cred)).data;
         if (msg) {
           context.dispatch('fetchProducts');
           toast.success(`${msg}`, {

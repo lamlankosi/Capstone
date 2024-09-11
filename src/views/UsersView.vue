@@ -17,7 +17,6 @@
         </div>
 
         <!-- users -->
-
         <div v-if="users.length" class="user-container">
             <div class="user-title">
                 <h2>Users</h2>
@@ -59,42 +58,49 @@
                         <td>{{ user.password }}</td>
                         <td class="actions">
 
-                            <button @click="editUser(user)"><i class="bi bi-pencil"></i></button>
+                            <button @click="openEditModal(user)"><i class="bi bi-pencil"></i></button>
                             <button @click="deleteUser(user.userID)"><i class="bi bi-trash-fill"></i></button>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
+        <!-- Add Product Modal -->
         <AddUserModal :visible="showAddUserModal" @update:visible="showAddUserModal = $event"
             @add-user="handleAddUser" />
-    </div>
+        
+            <!-- Edit User Modal -->
+             <EditUserModal :visible="showEditUserModal" :user="selectedUser" @update:visible="showEditUserModal"/>
+    
+        </div>
 
 
 </template>
 
 <script>
-import AddUserModal from '@/components/AddUserModal.vue';
+import AddUserModal from '@/components/AddUserModal.vue'
+import EditUserModal from '@/components/EditUserModal.vue'
 export default {
     name: 'AdminView',
     components: {
-        AddUserModal
+        AddUserModal,
+        EditUserModal
     },
     data() {
         return {
             searchQueryuser: '',
             showAddUserModal: false,
+            showEditUserModal: false,
+            selectedUser: null,
         }
     },
     computed: {
-
         users() {
             return this.$store.state.users || []
         },
         user() {
             return this.$store.state.user || null
         },
-
         searchUsers() {
             return this.users.filter(user => {
                 const search = this.searchQueryuser.toLowerCase()
@@ -111,6 +117,10 @@ export default {
         },
         async deleteUser(userID) {
             await this.$store.dispatch('deleteUser', userID)
+        },
+        openEditModal(user){
+            this.selectedUser = user
+            this.showEditUserModal = true
         }
     },
     async mounted() {

@@ -71,7 +71,21 @@ export default {
     },
     methods: {
         updateProductDetails() {
-            this.$store.dispatch('updateProduct', { ...this.form });
+            const data = {
+                id : this.form.prodID,
+                cred : {
+                    prodName: this.form.prodName,
+                    category: this.form.category,
+                    description: this.form.description,
+                    price: this.form.price,
+                    stock: this.form.stock,
+                    prodUrl: this.form.prodUrl,
+                }
+
+            }
+            console.log(data.cred);
+            
+            this.$store.dispatch('updateProduct', data);
             this.closeModal();
         },
         closeModal() {

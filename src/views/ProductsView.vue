@@ -85,6 +85,9 @@ export default {
     products() {
       return this.$store.state.products || [];
     },
+    product() {
+      return this.$store.state.product || null;
+    },
     searchProducts() {
       return this.products.filter((product) => {
         const search = this.searchQuery.toLowerCase()
