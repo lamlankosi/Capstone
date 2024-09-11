@@ -87,12 +87,12 @@ export default {
     },
     searchProducts() {
       return this.products.filter((product) => {
-        const search = this.searchQuery.toLowerCase();
+        const search = this.searchQuery.toLowerCase()
         return (
           product.prodName.toLowerCase().includes(search) ||
           product.category.toLowerCase().includes(search)
-        );
-      });
+        )
+      })
     },
   },
   methods: {

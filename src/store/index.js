@@ -268,6 +268,9 @@ export default createStore({
       }
       return null;
     },
+
+
+
     // orders
     async fetchOrders(context){
       try {
@@ -307,8 +310,42 @@ export default createStore({
           position: toast.POSITION.TOP_CENTER
         })
       }
+    },
+    async addOrder(context, payload){
+      try{
+        const res = await axios.post(`${APIUrl}orders/add`, payload);
+        const { result, msg } = res.data;
+        if (result) {
+          context.dispatch('fetchOrders');
+          toast.success(`${msg}`, {
+            autoClose: 3000,
+            position: toast.POSITION.TOP_CENTER
+          });
+        }
+      } catch (e) {
+        toast.error(`${e.message}`, {
+          autoClose: 2000,
+          position: toast.POSITION.TOP_CENTER
+        });
+      }
+    },
+    async deleteOrder(context,id){
+      try {
+        const {msg} = await  await (await axios.delete(`${APIUrl}orders/${id}`)).data
+        if(msg) {
+          context.dispatch('fetchOrders')
+          toast.success(`${msg}`, {
+            autoClose:2000,
+            position: toast.POSITION.TOP_CENTER
+          })
+        }
+      } catch (e) {
+        toast.error(`${e.message}`, {
+          autoClose: 2000,
+          position: toast.POSITION.TOP_CENTER
+          })
+      }
     }
-
   },
   modules: {
 
