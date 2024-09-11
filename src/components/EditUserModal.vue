@@ -76,7 +76,21 @@ export default {
     },
     methods: {
         updateUser() {
-            this.$store.dispatch('updateUser', { ...this.form })
+            const data = {
+                id: this.form.userID,
+                cred: {
+                    firstName: this.form.firstName,
+                    lastName: this.form.lastName,
+                    password: this.form.password,
+                    gender: this.form.gender,
+                    emailAdd: this.form.emailAdd,
+                    role: this.form.role,
+                    imageURL: this.form.imageURL,
+                    Location: this.form.Location,
+                }
+            }
+            
+            this.$store.dispatch('updateUser', data)
             this.closeModal()
         },
         closeModal() {

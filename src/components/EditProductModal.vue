@@ -83,8 +83,6 @@ export default {
                 }
 
             }
-            console.log(data.cred);
-            
             this.$store.dispatch('updateProduct', data);
             this.closeModal();
         },
