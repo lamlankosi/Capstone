@@ -84,7 +84,6 @@ export default {
         return {
             searchQueryuser: '',
             showAddUserModal: false,
-            selectUser: null,
         }
     },
     computed: {
@@ -107,14 +106,11 @@ export default {
         }
     },
     methods: {
-        // Trigger the store action to delete a user
+        handleAddUser(user) {
+            this.$store.dispatch('registerUser', user);
+        },
         async deleteUser(userID) {
             await this.$store.dispatch('deleteUser', userID)
-        },
-        // Open a modal or form to edit a user
-        editUser(user) {
-            // Logic to open the modal and fill it with user details goes here
-            this.$store.commit('setUser', user)
         }
     },
     async mounted() {
@@ -153,7 +149,7 @@ th {
 
 td img {
     max-width: 50px;
-    /* Ensure the image fits within the table */
+ 
 }
 
 .actions i {

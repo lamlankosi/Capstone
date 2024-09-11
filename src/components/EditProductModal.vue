@@ -1,124 +1,116 @@
-<!-- components/EditProductModal.vue -->
 <template>
-    <div v-if="visible" class="modal-backdrop">
-      <div class="modal">
-        <div class="modal-header">
-          <h3>Edit Product</h3>
-          <button class="close-btn" @click="$emit('update:visible', false)">X</button>
+    <div v-if="visible" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Edit Product</h2>
+            <form @submit.prevent="updateProductDetails">
+                <div class="form-group">
+                    <label for="prodName">Product Name</label>
+                    <input type="text" id="prodName" v-model="form.prodName" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input type="text" id="category" v-model="form.category" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" v-model="form.description" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" id="stock" v-model="form.stock" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" id="price" v-model="form.price" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="prodUrl">Image URL</label>
+                    <input type="text" id="prodUrl" v-model="form.prodUrl" class="form-control" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Update Product</button>
+                <button type="button" class="btn btn-secondary" @click="closeModal">Cancel</button>
+            </form>
         </div>
-        <div class="modal-body">
-          <form @submit.prevent="updateProduct">
-            <div class="form-group">
-              <label for="prodName">Product Name</label>
-              <input v-model="editedProduct.prodName" type="text" id="prodName" required />
-            </div>
-            <div class="form-group">
-              <label for="category">Category</label>
-              <input v-model="editedProduct.category" type="text" id="category" required />
-            </div>
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea v-model="editedProduct.description" id="description" required></textarea>
-            </div>
-            <div class="form-group">
-              <label for="stock">Stock</label>
-              <input v-model="editedProduct.stock" type="number" id="stock" required />
-            </div>
-            <div class="form-group">
-              <label for="price">Price</label>
-              <input v-model="editedProduct.price" type="number" id="price" required />
-            </div>
-            <div class="form-group">
-              <label for="prodUrl">Image URL</label>
-              <input v-model="editedProduct.prodUrl" type="url" id="prodUrl" required />
-            </div>
-            <button type="submit" class="btn btn-primary">Update Product</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
+</template>
+
+<script>
+export default {
+    name: 'EditProductModal',
     props: {
-      visible: {
-        type: Boolean,
-        required: true,
-      },
-      product: {
-        type: Object,
-        required: true,
-      },
+        visible: {
+            type: Boolean,
+            required: true,
+        },
+        product: {
+            type: Object,
+            required: true,
+        }
     },
     data() {
-      return {
-        editedProduct: { ...this.product },
-      };
-    },
-    methods: {
-      updateProduct() {
-        this.$emit('update-product', this.editedProduct);
-        this.$emit('update:visible', false); // Close the modal after update
-      },
+        return {
+            form: {
+                prodName: '',
+                category: '',
+                description: '',
+                stock: '',
+                price: '',
+                prodUrl: '',
+            }
+        }
     },
     watch: {
-      product(newProduct) {
-        this.editedProduct = { ...newProduct };
-      },
+        product: {
+            immediate: true,
+            handler(newProduct) {
+                if (newProduct) {
+                    this.form = { ...newProduct };
+                }
+            }
+        }
     },
-  };
-  </script>
-  
-  <style scoped>
- .modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999; /* Ensure the modal appears above other content */
+    methods: {
+        updateProductDetails() {
+            this.$store.dispatch('updateProduct', { ...this.form });
+            this.closeModal();
+        },
+        closeModal() {
+            this.$emit('update:visible', false);
+        }
+    }
 }
+</script>
 
-.modal {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 500px;
-  width: 100%;
-  z-index: 10000; /* Ensure the modal is above the backdrop */
-}
-
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  .form-group {
-    margin-bottom: 10px;
-  }
-  input,
-  textarea {
+<style scoped>
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-  }
-  button {
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  </style>
-  
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    position: absolute;
+    width: 300px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgb(68, 255, 0);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+</style>

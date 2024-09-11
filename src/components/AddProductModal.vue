@@ -65,7 +65,7 @@ export default {
 
 <style scoped>
 .modal-overlay {
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -78,15 +78,15 @@ export default {
 
 .modal-content {
   position: absolute;
-width: 300px;
-padding: 20px;
-background-color: rgba(0, 0, 0, 0.1); 
-border-radius: 10px;
-box-shadow: 0 2px 10px rgb(68, 255, 0);
-backdrop-filter: blur(10px); 
-display: flex;
-flex-direction: column;
-gap: 15px;
+  width: 300px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.1); 
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgb(68, 255, 0);
+  backdrop-filter: blur(10px); 
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 </style>
 

@@ -4,32 +4,32 @@
       <h3>Add New user</h3>
       <form @submit.prevent="submitForm">
         <div class="form-group">
-          <label for="profileURL">Product Name</label>
-          <input v-model="newUser.profileURL" type="text" id="prodName" required>
+          <label for="firstName">First Name</label>
+          <input v-model="newUser.firstName" type="text" id="prodName" required>
         </div>
         <div class="form-group">
           <label for="lastName">lastName</label>
           <input v-model="newUser.lastName" type="text" id="category" required>
         </div>
         <div class="form-group">
-          <label for="userAge">userAge</label>
-          <input v-model="newUser.userAge" type="number" id="description" required>
+          <label for="gender">gender</label>
+          <input v-model="newUser.gender" type="text" id="gender" required>
         </div>
         <div class="form-group">
-          <label for="Gender">Gender</label>
-          <input v-model="newUser.Gender" type="text" id="Gender" required>
+          <label for="role">role (R)</label>
+          <input v-model="newUser.role" type="text" id="role" required>
         </div>
         <div class="form-group">
-          <label for="userRole">userRole (R)</label>
-          <input v-model="newUser.userRole" type="text" id="userRole" required>
-        </div>
-        <div class="form-group">
-          <label for="emailAdd">Product Image URL</label>
+          <label for="emailAdd">Email Address</label>
           <input v-model="newUser.emailAdd" type="text" id="emailAdd" required>
         </div>
         <div class="form-group">
-          <label for="password">Product Image URL</label>
+          <label for="password">Password</label>
           <input v-model="newUser.password" type="text" id="password" required>
+        </div>
+        <div class="form-group">
+          <label for="imageURL">Profile Image</label>
+          <input v-model="newUser.imageURL" type="text" id="imageURL" required>
         </div>
         <button type="submit" class="btn btn-primary">Add Product</button>
         <button type="button" @click="$emit('update:visible', false)" class="btn btn-secondary">Cancel</button>
@@ -49,13 +49,13 @@ export default {
   data() {
     return {
       newUser: {
-        profileURL: '',
         firstName: '',
         lastName: '',
-        userAge: '',
-        Gender: '',
+        gender: '',
+        role:'',
         emailAdd:'',
         password: '',
+        imageURL: ''
       }
     };
   },
@@ -70,7 +70,7 @@ export default {
 
 <style scoped>
 .modal-overlay {
-
+  position:absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -82,15 +82,14 @@ export default {
 }
 
 .modal-content {
-  position: absolute;
-width: 300px;
-padding: 20px;
-background-color: rgba(0, 0, 0, 0.1); 
-border-radius: 10px;
-box-shadow: 0 2px 10px rgb(68, 255, 0);
-backdrop-filter: blur(10px); 
-display: flex;
-flex-direction: column;
-gap: 15px;
+  width: 300px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.1); 
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgb(68, 255, 0);
+  backdrop-filter: blur(10px); 
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 </style>
