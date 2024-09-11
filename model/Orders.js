@@ -26,7 +26,7 @@ class Orders{
     fetchOrder(req,res){
     try{
         const strQry=`
-        SELECT o.orderID, o.orderDate, u.firstName, u.emailAdd, p.prodName,o.totalAmount,u.Location o.status, 
+        SELECT o.orderID, o.orderDate, u.firstName, u.emailAdd, p.prodName,o.totalAmount,u.Location, o.status, 
         FROM Orders o
         INNER JOIN Users u ON o.userID = u.userID
         INNER JOIN Products p ON o.prodID = p.prodID
