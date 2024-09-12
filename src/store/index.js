@@ -203,22 +203,17 @@ export default createStore({
     },
     async updateUser(context, payload) {
       try {
-        const { msg, err } = await (await axios.patch(`${APIUrl}users/${payload.userID}`, payload.cred)).data;
+        const { msg } = await (await axios.patch(`${APIUrl}users/${payload.id}`, payload.cred)).data;
     
         if (msg) {
           context.dispatch('fetchUser', payload.userID);
-          toast.success(msg, {
-            autoClose: 3000,
-            position: toast.POSITION.TOP_CENTER
-          });
-        } else {
-          toast.error(err, {
+          toast.success(`${msg}` , {
             autoClose: 3000,
             position: toast.POSITION.TOP_CENTER
           });
         }
       } catch (e) {
-        toast.error(e.message, {
+        toast.error(`${e.message}`, {
           autoClose: 3000,
           position: toast.POSITION.TOP_CENTER
         });

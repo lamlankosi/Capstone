@@ -81,14 +81,15 @@ export default {
                 cred: {
                     firstName: this.form.firstName,
                     lastName: this.form.lastName,
-                    password: this.form.password,
                     gender: this.form.gender,
-                    emailAdd: this.form.emailAdd,
                     role: this.form.role,
+                    emailAdd: this.form.emailAdd,
+                    password: this.form.password,
                     imageURL: this.form.imageURL,
-                    Location: this.form.Location,
                 }
             }
+            console.log(data.cred);
+            
             
             this.$store.dispatch('updateUser', data)
             this.closeModal()
