@@ -23,9 +23,9 @@ const routes = [
     }
     }, 
   {
-    path: '/report',
-    name: 'report',
-    component: ()=> import('@/views/ReportView.vue')
+    path: '/contactUs',
+    name: 'contact Us',
+    component: ()=> import('@/views/ContactUs.vue')
   },
   {
     path: '/users',

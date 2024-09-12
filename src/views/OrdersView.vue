@@ -30,7 +30,7 @@
           <td>{{ order.Location }}</td>
           <td :class="getStatusClass(order.status)">{{ order.status }}</td>
           <td class="action">
-            <button><i class="bi bi-pencil"></i></button>
+            <button @click="openEditModal(order)"><i class="bi bi-pencil"></i></button>
             <button @click="deleteOrder(order.orderID)"><i class="bi bi-trash"></i></button>
           </td>
         </tr>
@@ -39,25 +39,34 @@
 
     <AddOrderModal :visible="showAddOrderModal" @update:visible="showAddOrderModal = false"
     @add-order="handleAddOrder" />
+
+    <EditOrderModal :visible="showEditOrderModal" :order="selectedOrder" @update:visible="showEditOrderModal = false"/>
   </div>
 </template>
 
 <script>
 import AddOrderModal from '@/components/AddOrderModal.vue';
+import EditOrderModal from '@/components/EditOrderModal.vue';
 export default {
   name: 'OrderView',
   components:{
-    AddOrderModal
+    AddOrderModal,
+    EditOrderModal
   },
   data(){
     return {
       searchOrderQuery: null,
       showAddOrderModal: false,
+      showEditOrderModal: false,
+      selectedOrder: null,
     }
   },
   computed: {
     orders() {
-      return this.$store.state.orders;
+      return this.$store.state.orders
+    },
+    order(){
+      return this.$store.state.order
     },
     searchOrders(){
       if (this.searchOrderQuery === null || this.searchOrderQuery === '') {
@@ -89,6 +98,10 @@ export default {
     },
     async deleteOrder(orderID) {
       await this.$store.dispatch('deleteOrder', orderID)
+    },
+    openEditModal(order) {
+      this.selectedOrder = order
+      this.showEditOrderModal = true
     }
   },
   mounted() {

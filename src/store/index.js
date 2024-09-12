@@ -7,7 +7,7 @@ import { applyToken } from '@/service/AuthenticatedUser'
 import router from '@/router'
 
 const { cookies } = useCookies()
-const APIUrl = "https://capstone-jq2s.onrender.com/"
+const APIUrl = "http://localhost:3001/"
 
 applyToken(cookies.get('LegitUser')?.token)
 
@@ -40,7 +40,7 @@ export default createStore({
       state.orders = value
     },
     setOrder(state, value) {
-      state.orders = value
+      state.order = value
     }
   },
   actions: {
@@ -90,6 +90,7 @@ export default createStore({
         if (msg) {
           context.dispatch('fetchProducts')
           toast.success(`${msg}`, {
+            theme: "dark",
             autoClose: 3000,
             position: toast.POSITION.TOP_CENTER
           })
@@ -107,6 +108,7 @@ export default createStore({
         if (msg) {
           context.dispatch('fetchProducts')
           toast.success(`${msg}`, {
+            theme:"dark",
             autoClose: 3000,
             position: toast.POSITION.TOP_CENTER
           })
@@ -122,7 +124,7 @@ export default createStore({
       try {
         const { msg } = await (await axios.patch(`${APIUrl}products/${payload.id}`, payload.cred)).data;
         if (msg) {
-          context.dispatch('fetchProducts');
+          context.dispatch('fetchProducts')
           toast.success(`${msg}`, {
             autoClose: 3000,
             position: toast.POSITION.TOP_CENTER
@@ -181,6 +183,7 @@ export default createStore({
         if (token) {
           context.dispatch('fetchUsers')
           toast.success(`${msg}`, {
+            theme:"dark",
             autoClose: 3000,
             position: toast.POSITION.TOP_CENTER
           })
@@ -340,7 +343,28 @@ export default createStore({
           position: toast.POSITION.TOP_CENTER
           })
       }
-    }
+    },
+    async updateOrder(context, payload) {
+      try {
+        const { msg, status } = await (await axios.patch(`${APIUrl}orders/${payload.id}`, payload.cred)).data;
+        if (status == 200) {
+          context.dispatch('fetchOrders')
+          toast.success(`${msg}`, {
+            theme: "dark",
+            autoClose: 3000,
+            position: toast.POSITION.TOP_CENTER
+          });
+        }
+
+        
+      } catch (e) {
+        toast.error(`${e.message}`, {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_CENTER
+        });
+        
+      }
+    },
   },
   modules: {
 

@@ -26,12 +26,6 @@
         <span v-if="!isCollapsed"> About</span>
       </router-link>
     </li>
-    <!-- <li class="nav-item">
-      <router-link class="nav-link" to="/admin">
-        <i class="bi bi-building-fill"></i>
-        <span v-if="!isCollapsed"> Admin</span>
-      </router-link>
-    </li> -->
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <i class="bi bi-building-fill"></i>Admin
@@ -43,7 +37,7 @@
       </ul>
     </li>
     <li class="nav-item">
-      <router-link class="nav-link" to="/report">
+      <router-link class="nav-link" to="/contactUs">
         <i class="bi bi-envelope-fill"></i>
         <span v-if="!isCollapsed"> Report Bug</span>
       </router-link>
