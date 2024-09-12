@@ -9,6 +9,10 @@
                     <input type="text" id="status" v-model="form.status" class="form-control"  />
                 </div>
                 <div class="form-group">
+                    <label for="totalAmount">totalAmount</label>
+                    <input type="number" id="totalAmount" v-model="form.totalAmount" class="form-control"  />
+                </div>
+                <div class="form-group">
                     <label for="Location">Date & Time</label>
                     <input type="datetime" id="Location" v-model="form.orderDate" class="form-control"  />
                 </div>
@@ -37,7 +41,8 @@ export default {
             form: {
                 orderID: 0,
                 status: '',
-                orderDate: ''
+                orderDate: '',
+                totalAmount:'',
             }
         }
     },
@@ -58,10 +63,10 @@ export default {
                 cred: {
                     status: this.form.status,
                     orderDate: this.form.orderDate,
+                    totalAmount: this.form.totalAmount,
                 }
 
             }
-            console.log(data)
 
             this.$store.dispatch('updateOrder', data)
             this.closeModal()

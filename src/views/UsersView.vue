@@ -5,11 +5,11 @@
         <!-- user -->
         <div v-if="user" class="logged-in-user">
             <div class="user-profile">
-                <img :src="user.profileURL" :alt="user.firstName" class="profile-image" loading="lazy">
+                <img :src="user.imageURL" :alt="user.firstName" class="profile-image" loading="lazy">
             </div>
             <div class="user-info">
                 <h2 class="fw-bold">{{ user.firstName }} {{ user.lastName }}</h2>
-                <p><span class="fw-bold">Age:</span> {{ user.age }}</p>
+                <!-- <p><span class="fw-bold">Age:</span> {{ user.age }}</p> -->
                 <p><span class="fw-bold">Gender:</span> {{ user.gender }}</p>
                 <p><span class="fw-bold">Role:</span>{{ user.role }}</p>
                 <p><span class="fw-bold">Email:</span> {{ user.emailAdd }}</p>

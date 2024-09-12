@@ -45,9 +45,9 @@
 
 main{
   height: 100dvh;
-  & .about{
+  /* & .about{
     height: inherit;
-  }
+  } */
 }
 
 

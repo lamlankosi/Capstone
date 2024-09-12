@@ -7,7 +7,7 @@ import { applyToken } from '@/service/AuthenticatedUser'
 import router from '@/router'
 
 const { cookies } = useCookies()
-const APIUrl = "http://localhost:3001/"
+const APIUrl = "https://capstone-jq2s.onrender.com/"
 
 applyToken(cookies.get('LegitUser')?.token)
 
