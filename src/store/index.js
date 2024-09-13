@@ -18,7 +18,11 @@ export default createStore({
     products: null,
     product: null,
     orders: null,
-    order: null
+    order: null,
+    incomes: null,
+    income: null,
+    expenses:null,
+    expense:null
   },
   getters: {
 
@@ -41,6 +45,15 @@ export default createStore({
     },
     setOrder(state, value) {
       state.order = value
+    },
+    setIncomes(state,value){
+      state.incomes = value
+    },
+    setIncome(state, value){
+      state.income = value
+    },
+    setExpenses(state,value){
+      state.expenses = value
     }
   },
   actions: {
@@ -365,6 +378,87 @@ export default createStore({
         
       }
     },
+
+    //income
+    async fetchIncomes(context) {
+      try{
+        const {results, msg} = await (await axios.get(`${APIUrl}report/income`)).data
+        if(results) {
+          context.commit('setIncomes', results)
+        } else {
+          toast.error(`${msg}`,{
+            autoClose:3000,
+            position: toast.POSITION.TOP_CENTER
+          })
+        }
+      } catch (e) {
+        toast.error(`${e.message}`,{
+          autoClose:3000,
+          position: toast.POSITION.TOP_CENTER
+        })
+      }
+    },
+    async downloadIncomeReport() {
+      try {
+        const response = await axios.get(`${APIUrl}report/income/download`, {
+          responseType: 'blob' // Important for handling binary data
+        });
+        
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'income_report.pdf');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (e) {
+        toast.error(`${e.message}`, {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_CENTER
+        });
+      }
+    },    
+
+    //Expenses
+    async fetchExpenses(context) {
+      try{
+        const {results, msg} = await (await axios.get(`${APIUrl}report/expenses`)).data
+        if(results) {
+          context.commit('setExpenses', results)
+        } else {
+          toast.error(`${msg}`,{
+            autoClose:3000,
+            position: toast.POSITION.TOP_CENTER
+          })
+        }
+      } catch (e) {
+        toast.error(`${e.message}`,{
+          autoClose:3000,
+          position: toast.POSITION.TOP_CENTER
+        })
+      }
+    }, 
+    async downloadExpensesReport() {
+      try {
+        const response = await axios.get(`${APIUrl}report/expenses/download`, {
+          responseType: 'blob' // Important for handling binary data
+        });
+        
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'expenses_report.pdf');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (e) {
+        toast.error(`${e.message}`, {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_CENTER
+        });
+      }
+    }
+    
   },
   modules: {
 

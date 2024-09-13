@@ -18,12 +18,12 @@
 }
 
 .side-navbar-collapsed + .main-content {
-  margin-left: 80px;
+  margin-left: 150px;
 }
 
 /* APP */
 #app {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -43,12 +43,12 @@
     color: #42b983;
   }
 
-main{
+/* main{
   height: 100dvh;
-  /* & .about{
+  & .about{
     height: inherit;
-  } */
-}
+  }
+} */
 
 
 
