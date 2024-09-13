@@ -1,4 +1,5 @@
 
+
 <template>
   <div v-if="$route.name !== 'HomeView'" class="d-flex flex-column flex-shrink-0 p-3  side-navbar" :class="{ 'side-navbar-collapsed': isCollapsed }" style="width: auto">
     <!-- Toggler button to collapse the sidebar -->

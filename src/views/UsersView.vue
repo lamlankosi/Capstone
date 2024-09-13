@@ -1,3 +1,4 @@
+USERSVIEW
 <template>
     <div class="admin">
         <h1>Users Page</h1>
@@ -9,6 +10,7 @@
             </div>
             <div class="user-info">
                 <h2 class="fw-bold">{{ user.firstName }} {{ user.lastName }}</h2>
+                <!-- <p><span class="fw-bold">Age:</span> {{ user.age }}</p> -->
                 <p><span class="fw-bold">Gender:</span> {{ user.gender }}</p>
                 <p><span class="fw-bold">Role:</span>{{ user.role }}</p>
                 <p><span class="fw-bold">Email:</span> {{ user.emailAdd }}</p>
@@ -19,12 +21,15 @@
         <div v-if="users.length" class="user-container">
             <div class="user-title">
                 <h2>Users</h2>
-                <div class="search-add-user d-flex align-items-center">
-                    <div class="search-box">
-                        <input type="text" v-model="searchQueryuser" class="form-control"
-                            placeholder="Search by first Name or Surname" />
-                    </div>
-                    <button class="btn btn-primary ms-3" @click="showAddUserModal = true">Add User</button>
+                <div class="col-md-3">
+                    <h5 class="search">Search Users</h5>
+                    <input type="text" v-model="searchQueryuser" class="form-control"
+                        placeholder="Search by first Name or Surname">
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary" @click="showAddUserModal = true">
+                        Add User
+                    </button>
                 </div>
             </div>
             <div class="products-table">
@@ -64,11 +69,11 @@
         <!-- Add Product Modal -->
         <AddUserModal :visible="showAddUserModal" @update:visible="showAddUserModal = $event"
             @add-user="handleAddUser" />
-
-        <!-- Edit User Modal -->
-        <EditUserModal :visible="showEditUserModal" :user="selectedUser" @update:visible="showEditUserModal" />
-
-    </div>
+        
+            <!-- Edit User Modal -->
+             <EditUserModal :visible="showEditUserModal" :user="selectedUser" @update:visible="showEditUserModal"/>
+    
+        </div>
 
 
 </template>
@@ -114,7 +119,7 @@ export default {
         async deleteUser(userID) {
             await this.$store.dispatch('deleteUser', userID)
         },
-        openEditModal(user) {
+        openEditModal(user){
             this.selectedUser = user
             this.showEditUserModal = true
         }
@@ -135,13 +140,10 @@ button {
     background: black;
     border-radius: 10px;
 }
-.bi{
-    color: white;
-}
 
 table {
-    width: 100%;
-    margin-top: 20px;
+    /* width: 100%;
+    margin-top: 20px; */
     border-collapse: collapse;
 }
 
@@ -158,7 +160,7 @@ th {
 
 td img {
     max-width: 50px;
-
+ 
 }
 
 .actions i {

@@ -28,12 +28,12 @@ table{
 }
 
 .side-navbar-collapsed + .main-content {
-  margin-left: 150px;
+  margin-left: 80px;
 }
 
 /* APP */
 #app {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -53,12 +53,12 @@ table{
     color: #42b983;
   }
 
-/* main{
+main{
   height: 100dvh;
-  & .about{
+  /* & .about{
     height: inherit;
-  }
-} */
+  } */
+}
 
 
 
