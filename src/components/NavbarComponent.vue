@@ -30,10 +30,11 @@
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <i class="bi bi-building-fill"></i>Admin
       </a>
-      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <ul class="dropdown-menu bg-success" aria-labelledby="navbarDropdown">
         <li><router-link class="dropdown-item" to="/users">Users</router-link></li>
         <li><router-link class="dropdown-item" to="/products">Products</router-link></li>
         <li><router-link class="dropdown-item" to="/orders">Orders</router-link></li>
+        <li><router-link class="dropdown-item" to="/report"> Report</router-link> </li>
       </ul>
     </li>
     <li class="nav-item">
@@ -43,6 +44,16 @@
       </router-link>
     </li>
   </ul>
+  <div class="dropdown user-info" v-if="loggedInUser">
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <img :src="loggedInUser.imageURL" alt="User Profile" width="32" height="32" class="rounded-circle me-2">
+        <strong>{{ loggedInUser.firstName }}</strong>
+      </a>
+
+      <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+        <li><a class="dropdown-item" href="#" @click="signOut">Sign out</a></li>
+      </ul>
+    </div>
 </div>
 
 
@@ -58,6 +69,11 @@ export default {
       isDropdownOpen: false, // New state for dropdown
     };
   },
+  computed:{
+    loggedInUser() {
+      return this.$store.state.user;
+    }
+  },
   methods: {
     toggleNavbar() {
       this.isCollapsed = !this.isCollapsed;
@@ -65,6 +81,9 @@ export default {
     toggleDropdown() {
       this.isDropdownOpen = !this.isDropdownOpen;
     },
+    signOut() {
+          this.$router.push('/');
+    }
   },
 };
 </script>
@@ -76,7 +95,7 @@ export default {
   left: 0;
   width: 200px;
   height: 100vh;
-  background-color: #2c3e50;
+  background-color: #345e37;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

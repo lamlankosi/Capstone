@@ -23,7 +23,7 @@ export default {
 
 
 .footer {
-    background: rgb(99, 243, 3);
+    background: #2E8B57;
     color: white;
     /* position: fixed;
     bottom: 0;

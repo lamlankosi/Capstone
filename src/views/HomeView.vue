@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <div class="header">
-      <router-link to="/about">view</router-link>
       <button class="btn btn-primary" @click="showLogin = true">Login</button>
       <button class="btn btn-secondary" @click="showRegister = true">Register</button>
     </div>
@@ -47,9 +46,9 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #1a237e;
   color: white;
   padding: 20px;
+  
 }
 
 .header {

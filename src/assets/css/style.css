@@ -15,6 +15,16 @@
   margin-left: 200px; 
   padding: 20px;
   transition: margin-left 0.3s ease;
+  color: white;
+}
+.wrapper{
+  background-color: #2d2d2d;
+}
+.home{
+  background-color: #2d2d2d;
+}
+table{
+  color: black;
 }
 
 .side-navbar-collapsed + .main-content {

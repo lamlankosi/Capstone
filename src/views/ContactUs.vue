@@ -43,7 +43,10 @@
     justify-content: space-between;
     padding: 50px;
     padding-left: 220px;
+    color: black;
     background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow:  0 2px 10px rgba(70, 230, 7, 0.904);
   }
   
   .content {
@@ -65,7 +68,7 @@
   
   .form-container {
     flex: 1;
-    background-color: white;
+    background-color: #e0e0e0;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
