@@ -1,113 +1,124 @@
 <template>
-  <div class="contact-us-container">
-    <div class="content">
-     <h2>Contact us</h2>
-      <p>Contact us at the form on right if you having issues... And tell us wich issues you are having</p>
+  <div class="container-fluid">
+    <h1>STORE'S REPORT PAGE</h1>
+
+    <!-- Income  -->
+    <div class="income">
+      <h1>Income</h1>
+      <div class="actions-container">
+        <button class="btn btn-primary export-btn" @click="downloadIncomeReport">
+          Export Income <i class="bi bi-download"></i>
+        </button>
+      </div>
+      <table>
+        <tr>
+          <th>Income ID</th>
+          <th>Order ID</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Income Date</th>
+          <th>Description</th>
+        </tr>
+        <tr v-for="income in incomes" :key="income.incomeID">
+          <td>{{ income.incomeID }}</td>
+          <td>{{ income.orderID }}</td>
+          <td>{{ income.category }}</td>
+          <td>{{ income.amount }}</td>
+          <td>{{ income.incomeDate }}</td>
+          <td>{{ income.description }}</td>
+        </tr>
+      </table>
     </div>
-    <div class="form-container">
-      <form
-        action="https://formspree.io/f/xblrwvkb"
-        method="POST"
-      >
-        <div class="form-group">
-          <label for="first-name">First name</label>
-          <input type="text" id="first-name" name="first-name" required>
-        </div>
-        <div class="form-group">
-          <label for="last-name">Last name</label>
-          <input type="text" id="last-name" name="last-name">
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="message">What can we help you with?</label>
-          <textarea id="message" name="message"></textarea>
-        </div>
-        <button type="submit" class="submit-btn">Submit</button>
-      </form>
+
+    <!-- Expenses  -->
+    <div class="expenses">
+      <h1>Expenses</h1>
+      <div class="actions-container">
+        <button class="btn btn-primary export-btn" @click="exportExpensesReport">
+          Export Expenses <i class="bi bi-download"></i>
+        </button>
+      </div>
+      <table>
+        <tr>
+          <th>Expense ID</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Expense Date</th>
+          <th>Description</th>
+        </tr>
+        <tr v-for="expense in expenses" :key="expense.expenseID">
+          <td>{{ expense.expenseID }}</td>
+          <td>{{ expense.category }}</td>
+          <td>{{ expense.amount }}</td>
+          <td>{{ expense.expenseDate }}</td>
+          <td>{{ expense.description }}</td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'ReportView',
+  computed: {
+    incomes() {
+      return this.$store.state.incomes
+    },
+    expenses() {
+      return this.$store.state.expenses
+    }
+  },
+  mounted() {
+    this.$store.dispatch('fetchIncomes')
+    this.$store.dispatch('fetchExpenses')
+  },
+  methods: {
+    exportExpensesReport() {
+      this.$store.dispatch('downloadExpensesReport')
+    },
+    downloadIncomeReport() {
+      this.$store.dispatch('downloadIncomeReport')
+    }
+  }
 }
 </script>
 
 <style scoped>
-.contact-us-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 50px;
-  padding-left: 220px;
-  background-color: #f8f9fa;
-}
-
-.content {
-  flex: 1;
-  padding-right: 50px;
-}
-
-h2 {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-p {
-  font-size: 16px;
-  color: #6c757d;
-}
-
-
-.form-container {
-  flex: 1;
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
-}
-
-input[type="text"],
-input[type="email"],
-textarea {
+table {
   width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th,
+td {
   padding: 10px;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
-  font-size: 14px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
-textarea {
-  height: 100px;
-  resize: none;
+th {
+  background-color: #f4f4f4;
 }
 
-.submit-btn {
-  background-color: #5a67d8;
-  color: white;
-  padding: 10px 20px;
+.actions-container {
+  display: flex;
+  justify-content: flex-start; 
+  margin-bottom: 10px;
+}
+
+.export-btn {
+  background: #007bff;
   border: none;
+  padding: 10px 20px;
+  color: white;
+  font-size: 14px;
   border-radius: 5px;
-  font-size: 16px;
   cursor: pointer;
 }
 
-.submit-btn:hover {
-  background-color: #4c51bf;
+.export-btn i {
+  margin-left: 5px;
 }
-
 </style>
