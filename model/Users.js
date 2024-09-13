@@ -127,48 +127,63 @@ class Users{
     }
     async login(req, res) {
         try {
-            const { emailAdd, password } = req.body
+            const { emailAdd, password } = req.body;
             const strQry = `
-            SELECT userID, firstName,lastName, password, gender, Gender, emailAdd, role,imageURL,Location, createdAt
-            FROM Users
-            WHERE emailAdd = '${emailAdd}';
-            `
-            db.query(strQry, async (err, result) => {
-                if (err) throw new Error(err)
+                SELECT userID, firstName, lastName, password, gender, emailAdd, role, imageURL, Location, createdAt
+                FROM Users
+                WHERE emailAdd = ?;
+            `;
+            db.query(strQry, [emailAdd], async (err, result) => {
+                if (err) {
+                    res.status(500).json({
+                        status: 500,
+                        msg: 'Database query error'
+                    });
+                    return;
+                }
                 if (!result?.length) {
-                    res.json(
-                        {
-                            status: 401,
-                            msg: 'Invalid email address.'
-                        }
-                    )
-                } else {
-                    const validPass = await compare(password, result[0].password)
-                    if (validPass) {
+                    res.status(401).json({
+                        status: 401,
+                        msg: 'Invalid email address.'
+                    });
+                    return;
+                }
+    
+                const user = result[0];
+                const validPass = await compare(password, user.password);
+    
+                if (validPass) {
+                    if (user.role === 'Admin') {
                         const token = createAToken({
                             emailAdd,
                             password
-                        })
-                        res.json({
-                            status: res.statusCode,
+                        });
+                        res.status(200).json({
+                            status: 200,
                             token,
-                            result: result[0]
-                        })
+                            result: user
+                        });
                     } else {
-                        res.json({
-                            status: 401,
-                            msg: 'Invalid password or you have not registered'
-                        })
+                        res.status(403).json({
+                            status: 403,
+                            msg: 'Access denied: Admins only'
+                        });
                     }
+                } else {
+                    res.status(401).json({
+                        status: 401,
+                        msg: 'Invalid password'
+                    });
                 }
-            })
+            });
         } catch (e) {
-            res.json({
-                status: 404,
+            res.status(500).json({
+                status: 500,
                 msg: e.message
-            })
+            });
         }
     }
+    
     
 
 }
