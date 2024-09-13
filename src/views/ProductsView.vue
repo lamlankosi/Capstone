@@ -8,9 +8,30 @@
         <h2>Products</h2>
         <div class="row gap-2">
           <div class="d-flex flex-wrap gap-3">
+            <!-- Search Input -->
             <div class="col-md-2">
               <input type="text" v-model="searchQuery" class="form-control" placeholder="Search by name or category" />
             </div>
+
+            <!-- Category Filter -->
+            <div class="col-md-2">
+              <select v-model="selectedCategory" class="form-control">
+                <option value="">All Categories</option>
+                <option v-for="category in uniqueCategories" :key="category" :value="category">
+                  {{ category }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Sort By Price -->
+            <div class="col-md-2">
+              <select v-model="sortOrder" class="form-control">
+                <option value="asc">Sort by Price: Low to High</option>
+                <option value="desc">Sort by Price: High to Low</option>
+              </select>
+            </div>
+
+            <!-- Add Product Button -->
             <div class="col-md-4">
               <button class="btn btn-primary" @click="showAddProductModal = true">
                 Add Product
@@ -18,6 +39,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Products Table -->
         <div class="products-table">
           <table>
             <tr>
@@ -27,13 +50,17 @@
               <th>Category</th>
               <th>Description</th>
               <th>Stock</th>
-              <th>Amount</th>
+              <th @click="sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'">
+                Amount
+                <span v-if="sortOrder === 'asc'">&#9650;</span>
+                <span v-else>&#9660;</span>
+              </th>
               <th>Actions</th>
             </tr>
-            <tr v-if="searchProducts.length === 0">
-              <td colspan="7" class="no-products">Product not provided</td>
+            <tr v-if="sortedAndFilteredProducts.length === 0">
+              <td colspan="8" class="no-products">No products available</td>
             </tr>
-            <tr v-else v-for="product in searchProducts" :key="product.prodID">
+            <tr v-else v-for="product in sortedAndFilteredProducts" :key="product.prodID">
               <td>{{ product.prodID }}</td>
               <td><img :src="product.prodUrl" :alt="product.prodName" class="product-image" loading="lazy" /></td>
               <td>{{ product.prodName }}</td>
@@ -52,30 +79,28 @@
     </div>
 
     <!-- Add Product Modal -->
-    <AddProductModal :visible="showAddProductModal" @update:visible="showAddProductModal = false"
-      @add-product="handleAddProduct" />
+    <AddProductModal :visible="showAddProductModal" @update:visible="showAddProductModal = false" @add-product="handleAddProduct" />
 
-      <!-- Edit Product Modal -->
-      <EditProductModal
-      :visible="showEditProductModal"
-      :product="selectedProduct"
-      @update:visible="showEditProductModal = false"
-    />
+    <!-- Edit Product Modal -->
+    <EditProductModal :visible="showEditProductModal" :product="selectedProduct" @update:visible="showEditProductModal = false" />
   </div>
 </template>
 
 <script>
-import AddProductModal from '@/components/AddProductModal.vue'
-import EditProductModal from '@/components/EditProductModal.vue'
+import AddProductModal from '@/components/AddProductModal.vue';
+import EditProductModal from '@/components/EditProductModal.vue';
+
 export default {
   name: 'ProductsView',
   components: {
     AddProductModal,
-    EditProductModal
+    EditProductModal,
   },
   data() {
     return {
       searchQuery: '',
+      selectedCategory: '', // For category filtering
+      sortOrder: 'asc', // For sorting price
       showAddProductModal: false,
       showEditProductModal: false,
       selectedProduct: null,
@@ -85,17 +110,32 @@ export default {
     products() {
       return this.$store.state.products || [];
     },
-    product() {
-      return this.$store.state.product || null;
+    uniqueCategories() {
+      // Get unique categories for the dropdown
+      const categories = this.products.map((product) => product.category);
+      return [...new Set(categories)];
     },
-    searchProducts() {
-      return this.products.filter((product) => {
-        const search = this.searchQuery.toLowerCase()
-        return (
-          product.prodName.toLowerCase().includes(search) ||
-          product.category.toLowerCase().includes(search)
-        )
-      })
+    sortedAndFilteredProducts() {
+      // Filter products by search query and selected category
+      let filteredProducts = this.products.filter((product) => {
+        const search = this.searchQuery.toLowerCase();
+        const matchesSearch = product.prodName.toLowerCase().includes(search) || product.category.toLowerCase().includes(search);
+        const matchesCategory = this.selectedCategory ? product.category === this.selectedCategory : true;
+        return matchesSearch && matchesCategory;
+      });
+
+      // Sort products by price
+      filteredProducts.sort((a, b) => {
+        const priceA = parseFloat(a.price);
+        const priceB = parseFloat(b.price);
+        if (this.sortOrder === 'asc') {
+          return priceA - priceB;
+        } else {
+          return priceB - priceA;
+        }
+      });
+
+      return filteredProducts;
     },
   },
   methods: {
@@ -113,11 +153,11 @@ export default {
   async mounted() {
     await this.$store.dispatch('fetchProducts');
   },
-}
+};
 </script>
 
-
 <style scoped>
+/* Styles remain the same */
 button {
   background: black;
   border-radius: 10px;
@@ -138,6 +178,7 @@ td {
 
 th {
   background-color: #f4f4f4;
+  cursor: pointer;
 }
 
 td img {
