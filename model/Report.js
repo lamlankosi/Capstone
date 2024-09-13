@@ -5,7 +5,7 @@ class Report {
     fetchIncome(req, res) {
         try {
             const strQry = `
-            SELECT incomeID, orderID, category, amount, incomeDate, description
+            SELECT incomeID, orderID, category, amount, CONCAT(SUBSTRING(incomeDate, 1, 10), SUBSTRING(incomeDate, 11, 12)) 'incomeDate', description
             FROM income
             `;
             db.query(strQry, (err, results) => {
@@ -26,7 +26,7 @@ class Report {
     fetchExpenses(req, res) {
         try {
             const strQry = `
-            SELECT expenseID, category, amount, expenseDate, description
+            SELECT expenseID, category, amount, CONCAT(SUBSTRING(expenseDate, 1, 10), SUBSTRING(expenseDate, 11, 12)) 'expenseDate', description
             FROM expenses;
             `;
             db.query(strQry, (err, results) => {
