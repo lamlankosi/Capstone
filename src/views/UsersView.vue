@@ -1,170 +1,192 @@
-USERSVIEW
 <template>
     <div class="admin">
-        <h1>Users Page</h1>
-
-        <!-- user -->
-        <div v-if="user" class="logged-in-user">
-            <div class="user-profile">
-                <img :src="user.imageURL" :alt="user.firstName" class="profile-image" loading="lazy">
+      <h1>Products Page</h1>
+  
+      <!-- products -->
+      <div class="product-container">
+        <div class="product-title">
+          <h2>Products</h2>
+          <div class="row gap-2">
+            <div class="d-flex flex-wrap gap-3">
+              <!-- Search Input -->
+              <div class="col-md-2">
+                <input type="text" v-model="searchQuery" class="form-control" placeholder="Search by name or category" />
+              </div>
+  
+              <!-- Category Filter -->
+              <div class="col-md-2">
+                <select v-model="selectedCategory" class="form-control">
+                  <option value="">All Categories</option>
+                  <option v-for="category in uniqueCategories" :key="category" :value="category">
+                    {{ category }}
+                  </option>
+                </select>
+              </div>
+  
+              <!-- Sort By Price -->
+              <div class="col-md-2">
+                <select v-model="sortOrder" class="form-control">
+                  <option value="asc">Sort by Price: Low to High</option>
+                  <option value="desc">Sort by Price: High to Low</option>
+                </select>
+              </div>
+  
+              <!-- Add Product Button -->
+              <div class="col-md-4">
+                <button class="btn btn-primary" @click="showAddProductModal = true">
+                  Add Product
+                </button>
+              </div>
             </div>
-            <div class="user-info">
-                <h2 class="fw-bold">{{ user.firstName }} {{ user.lastName }}</h2>
-                <!-- <p><span class="fw-bold">Age:</span> {{ user.age }}</p> -->
-                <p><span class="fw-bold">Gender:</span> {{ user.gender }}</p>
-                <p><span class="fw-bold">Role:</span>{{ user.role }}</p>
-                <p><span class="fw-bold">Email:</span> {{ user.emailAdd }}</p>
-            </div>
+          </div>
+  
+          <!-- Products Table -->
+          <div class="products-table">
+            <table>
+              <tr>
+                <th>Product ID</th>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Stock</th>
+                <th @click="sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'">
+                  Amount
+                  <span v-if="sortOrder === 'asc'">&#9650;</span>
+                  <span v-else>&#9660;</span>
+                </th>
+                <th>Actions</th>
+              </tr>
+              <tr v-if="sortedAndFilteredProducts.length === 0">
+                <td colspan="8" class="no-products">No products available</td>
+              </tr>
+              <tr v-else v-for="product in sortedAndFilteredProducts" :key="product.prodID">
+                <td>{{ product.prodID }}</td>
+                <td><img :src="product.prodUrl" :alt="product.prodName" class="product-image" loading="lazy" /></td>
+                <td>{{ product.prodName }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.stock }}</td>
+                <td>R{{ product.price }}</td>
+                <td class="actions">
+                  <button @click="openEditModal(product)"><i class="bi bi-pencil"></i></button>
+                  <button @click="deleteProduct(product.prodID)"><i class="bi bi-trash"></i></button>
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
-
-        <!-- users -->
-        <div v-if="users.length" class="user-container">
-            <div class="user-title">
-                <h2>Users</h2>
-                <div class="col-md-3">
-                    <h5 class="search">Search Users</h5>
-                    <input type="text" v-model="searchQueryuser" class="form-control"
-                        placeholder="Search by first Name or Surname">
-                </div>
-                <div class="col-md-4">
-                    <button class="btn btn-primary" @click="showAddUserModal = true">
-                        Add User
-                    </button>
-                </div>
-            </div>
-            <div class="products-table">
-                <table>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Profile</th>
-                        <th>First Name</th>
-                        <th>Surname</th>
-                        <th>Gender</th>
-                        <th>Role</th>
-                        <th>Email Address</th>
-                        <th>Password</th>
-                        <th>Actions</th>
-                    </tr>
-                    <tr v-if="searchUsers.length === 0">
-                        <td colspan="7" class="no-products">User not on database</td>
-                    </tr>
-                    <tr v-else v-for="user in searchUsers" :key="user.userID">
-                        <td>{{ user.userID }}</td>
-                        <td><img :src="user.imageURL" :alt="user.firstName" class="product-image" loading="lazy"></td>
-                        <td>{{ user.firstName }}</td>
-                        <td>{{ user.lastName }}</td>
-                        <td>{{ user.gender }}</td>
-                        <td>{{ user.role }}</td>
-                        <td>{{ user.emailAdd }}</td>
-                        <td>{{ user.password }}</td>
-                        <td class="actions">
-
-                            <button @click="openEditModal(user)"><i class="bi bi-pencil"></i></button>
-                            <button @click="deleteUser(user.userID)"><i class="bi bi-trash-fill"></i></button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <!-- Add Product Modal -->
-        <AddUserModal :visible="showAddUserModal" @update:visible="showAddUserModal = $event"
-            @add-user="handleAddUser" />
-        
-            <!-- Edit User Modal -->
-             <EditUserModal :visible="showEditUserModal" :user="selectedUser" @update:visible="showEditUserModal"/>
-    
-        </div>
-
-
-</template>
-
-<script>
-import AddUserModal from '@/components/AddUserModal.vue'
-import EditUserModal from '@/components/EditUserModal.vue'
-export default {
-    name: 'AdminView',
+      </div>
+  
+      <!-- Add Product Modal -->
+      <AddProductModal :visible="showAddProductModal" @update:visible="showAddProductModal = false" @add-product="handleAddProduct" />
+  
+      <!-- Edit Product Modal -->
+      <EditProductModal :visible="showEditProductModal" :product="selectedProduct" @update:visible="showEditProductModal = false" />
+    </div>
+  </template>
+  
+  <script>
+  import AddProductModal from '@/components/AddProductModal.vue';
+  import EditProductModal from '@/components/EditProductModal.vue';
+  
+  export default {
+    name: 'ProductsView',
     components: {
-        AddUserModal,
-        EditUserModal
+      AddProductModal,
+      EditProductModal,
     },
     data() {
-        return {
-            searchQueryuser: '',
-            showAddUserModal: false,
-            showEditUserModal: false,
-            selectedUser: null,
-        }
+      return {
+        searchQuery: '',
+        selectedCategory: '', 
+        sortOrder: 'asc', 
+        showAddProductModal: false,
+        showEditProductModal: false,
+        selectedProduct: null,
+      };
     },
     computed: {
-        users() {
-            return this.$store.state.users || []
-        },
-        user() {
-            return this.$store.state.user || null
-        },
-        searchUsers() {
-            return this.users.filter(user => {
-                const search = this.searchQueryuser.toLowerCase()
-                return (
-                    user.firstName.toLowerCase().includes(search) ||
-                    user.lastName.toLowerCase().includes(search)
-                )
-            })
-        }
+      products() {
+        return this.$store.state.products || [];
+      },
+      uniqueCategories() {
+        const categories = this.products.map((product) => product.category);
+        return [...new Set(categories)];
+      },
+      sortedAndFilteredProducts() {
+        // Filter products by search query and selected category
+        let filteredProducts = this.products.filter((product) => {
+          const search = this.searchQuery.toLowerCase();
+          const matchesSearch = product.prodName.toLowerCase().includes(search) || product.category.toLowerCase().includes(search);
+          const matchesCategory = this.selectedCategory ? product.category === this.selectedCategory : true;
+          return matchesSearch && matchesCategory;
+        });
+  
+        // Sort products by price
+        filteredProducts.sort((a, b) => {
+          const priceA = parseFloat(a.price);
+          const priceB = parseFloat(b.price);
+          if (this.sortOrder === 'asc') {
+            return priceA - priceB;
+          } else {
+            return priceB - priceA;
+          }
+        });
+  
+        return filteredProducts;
+      },
     },
     methods: {
-        handleAddUser(user) {
-            this.$store.dispatch('registerUser', user);
-        },
-        async deleteUser(userID) {
-            await this.$store.dispatch('deleteUser', userID)
-        },
-        openEditModal(user){
-            this.selectedUser = user
-            this.showEditUserModal = true
-        }
+      handleAddProduct(product) {
+        this.$store.dispatch('addAProduct', product);
+      },
+      async deleteProduct(productID) {
+        await this.$store.dispatch('deleteProduct', productID);
+      },
+      openEditModal(product) {
+        this.selectedProduct = product;
+        this.showEditProductModal = true;
+      },
     },
     async mounted() {
-        await this.$store.dispatch('fetchUsers')
-
-        const userId = this.$store.state.user?.userId
-        if (userId) {
-            await this.$store.dispatch('fetchUser', userId)
-        }
-    }
-}
-</script>
-
-<style scoped>
-button {
+      await this.$store.dispatch('fetchProducts');
+    },
+  };
+  </script>
+  
+  <style scoped>
+  
+  button {
     background: black;
     border-radius: 10px;
-}
-
-table {
-    /* width: 100%;
-    margin-top: 20px; */
+  }
+  
+  table {
+    width: 100%;
+    margin-top: 20px;
     border-collapse: collapse;
-}
-
-th,
-td {
+  }
+  
+  th,
+  td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-}
-
-th {
+  }
+  
+  th {
     background-color: #f4f4f4;
-}
-
-td img {
+    cursor: pointer;
+  }
+  
+  td img {
     max-width: 50px;
- 
-}
-
-.actions i {
+  }
+  
+  .actions i {
     margin: 0 5px;
     cursor: pointer;
-}
-</style>
+  }
+  </style>
+  
