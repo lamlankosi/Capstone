@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-        <div class="row">
+        <div class="Footer">
             <p class="lead">
                 Lamlankosi Nomnganga &copy; <span id="currYear"> {{ cYear  }}</span>
             </p>
