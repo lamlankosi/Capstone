@@ -1,192 +1,205 @@
 <template>
-    <div class="admin">
-      <h1>Products Page</h1>
-  
-      <!-- products -->
-      <div class="product-container">
-        <div class="product-title">
-          <h2>Products</h2>
-          <div class="row gap-2">
-            <div class="d-flex flex-wrap gap-3">
-              <!-- Search Input -->
-              <div class="col-md-2">
-                <input type="text" v-model="searchQuery" class="form-control" placeholder="Search by name or category" />
-              </div>
-  
-              <!-- Category Filter -->
-              <div class="col-md-2">
-                <select v-model="selectedCategory" class="form-control">
-                  <option value="">All Categories</option>
-                  <option v-for="category in uniqueCategories" :key="category" :value="category">
-                    {{ category }}
-                  </option>
-                </select>
-              </div>
-  
-              <!-- Sort By Price -->
-              <div class="col-md-2">
-                <select v-model="sortOrder" class="form-control">
-                  <option value="asc">Sort by Price: Low to High</option>
-                  <option value="desc">Sort by Price: High to Low</option>
-                </select>
-              </div>
-  
-              <!-- Add Product Button -->
-              <div class="col-md-4">
-                <button class="btn btn-primary" @click="showAddProductModal = true">
-                  Add Product
-                </button>
-              </div>
-            </div>
+  <div class="admin">
+      <h1>Users Page</h1>
+
+      <!-- Logged-in User -->
+      <div v-if="user" class="logged-in-user">
+          <div class="user-profile">
+              <img :src="user.imageURL" :alt="user.firstName" class="profile-image" loading="lazy">
           </div>
-  
-          <!-- Products Table -->
-          <div class="products-table">
-            <table>
-              <tr>
-                <th>Product ID</th>
-                <th>Image</th>
-                <th>Product Name</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Stock</th>
-                <th @click="sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'">
-                  Amount
-                  <span v-if="sortOrder === 'asc'">&#9650;</span>
-                  <span v-else>&#9660;</span>
-                </th>
-                <th>Actions</th>
-              </tr>
-              <tr v-if="sortedAndFilteredProducts.length === 0">
-                <td colspan="8" class="no-products">No products available</td>
-              </tr>
-              <tr v-else v-for="product in sortedAndFilteredProducts" :key="product.prodID">
-                <td>{{ product.prodID }}</td>
-                <td><img :src="product.prodUrl" :alt="product.prodName" class="product-image" loading="lazy" /></td>
-                <td>{{ product.prodName }}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.stock }}</td>
-                <td>R{{ product.price }}</td>
-                <td class="actions">
-                  <button @click="openEditModal(product)"><i class="bi bi-pencil"></i></button>
-                  <button @click="deleteProduct(product.prodID)"><i class="bi bi-trash"></i></button>
-                </td>
-              </tr>
-            </table>
+          <div class="user-info">
+              <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+              <p><strong>Gender:</strong> {{ user.gender }}</p>
+              <p><strong>Role:</strong> {{ user.role }}</p>
+              <p><strong>Email:</strong> {{ user.emailAdd }}</p>
           </div>
-        </div>
       </div>
-  
-      <!-- Add Product Modal -->
-      <AddProductModal :visible="showAddProductModal" @update:visible="showAddProductModal = false" @add-product="handleAddProduct" />
-  
-      <!-- Edit Product Modal -->
-      <EditProductModal :visible="showEditProductModal" :product="selectedProduct" @update:visible="showEditProductModal = false" />
-    </div>
-  </template>
-  
-  <script>
-  import AddProductModal from '@/components/AddProductModal.vue';
-  import EditProductModal from '@/components/EditProductModal.vue';
-  
-  export default {
-    name: 'ProductsView',
-    components: {
-      AddProductModal,
-      EditProductModal,
-    },
-    data() {
+
+      <!-- Users List -->
+      <div v-if="users.length" class="user-container">
+          <div class="user-header">
+              <h2>Users</h2>
+              <input type="text" v-model="searchQueryuser" class="search-input" placeholder="Search users...">
+              <button class="btn" @click="showAddUserModal = true">Add User</button>
+          </div>
+          <div class="users-table-container">
+              <table class="users-table">
+                  <thead>
+                      <tr>
+                          <th>User ID</th>
+                          <th>Profile</th>
+                          <th>First Name</th>
+                          <th>Surname</th>
+                          <th>Gender</th>
+                          <th>Role</th>
+                          <th>Email</th>
+                          <th>Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr v-if="searchUsers.length === 0">
+                          <td colspan="8" class="no-users">No users found</td>
+                      </tr>
+                      <tr v-else v-for="user in searchUsers" :key="user.userID">
+                          <td>{{ user.userID }}</td>
+                          <td><img :src="user.imageURL" :alt="user.firstName" class="user-image" loading="lazy"></td>
+                          <td>{{ user.firstName }}</td>
+                          <td>{{ user.lastName }}</td>
+                          <td>{{ user.gender }}</td>
+                          <td>{{ user.role }}</td>
+                          <td>{{ user.emailAdd }}</td>
+                          <td class="actions">
+                              <button @click="openEditModal(user)" class="edit-btn">✏️</button>
+                              <button @click="deleteUser(user.userID)" class="delete-btn">🗑️</button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+
+      <!-- Modals -->
+      <AddUserModal :visible="showAddUserModal" @update:visible="showAddUserModal = $event" @add-user="handleAddUser" />
+      <EditUserModal :visible="showEditUserModal" :user="selectedUser" @update:visible="showEditUserModal"/>
+  </div>
+</template>
+
+<script>
+import AddUserModal from '@/components/AddUserModal.vue'
+import EditUserModal from '@/components/EditUserModal.vue'
+export default {
+  name: 'AdminView',
+  components: { AddUserModal, EditUserModal },
+  data() {
       return {
-        searchQuery: '',
-        selectedCategory: '', 
-        sortOrder: 'asc', 
-        showAddProductModal: false,
-        showEditProductModal: false,
-        selectedProduct: null,
-      };
-    },
-    computed: {
-      products() {
-        return this.$store.state.products || [];
+          searchQueryuser: '',
+          showAddUserModal: false,
+          showEditUserModal: false,
+          selectedUser: null,
+      }
+  },
+  computed: {
+      users() {
+          return this.$store.state.users || []
       },
-      uniqueCategories() {
-        const categories = this.products.map((product) => product.category);
-        return [...new Set(categories)];
+      user() {
+          return this.$store.state.user || null
       },
-      sortedAndFilteredProducts() {
-        // Filter products by search query and selected category
-        let filteredProducts = this.products.filter((product) => {
-          const search = this.searchQuery.toLowerCase();
-          const matchesSearch = product.prodName.toLowerCase().includes(search) || product.category.toLowerCase().includes(search);
-          const matchesCategory = this.selectedCategory ? product.category === this.selectedCategory : true;
-          return matchesSearch && matchesCategory;
-        });
-  
-        // Sort products by price
-        filteredProducts.sort((a, b) => {
-          const priceA = parseFloat(a.price);
-          const priceB = parseFloat(b.price);
-          if (this.sortOrder === 'asc') {
-            return priceA - priceB;
-          } else {
-            return priceB - priceA;
-          }
-        });
-  
-        return filteredProducts;
+      searchUsers() {
+          return this.users.filter(user => {
+              const search = this.searchQueryuser.toLowerCase()
+              return (
+                  user.firstName.toLowerCase().includes(search) ||
+                  user.lastName.toLowerCase().includes(search)
+              )
+          })
+      }
+  },
+  methods: {
+      handleAddUser(user) {
+          this.$store.dispatch('registerUser', user);
       },
-    },
-    methods: {
-      handleAddProduct(product) {
-        this.$store.dispatch('addAProduct', product);
+      async deleteUser(userID) {
+          await this.$store.dispatch('deleteUser', userID)
       },
-      async deleteProduct(productID) {
-        await this.$store.dispatch('deleteProduct', productID);
-      },
-      openEditModal(product) {
-        this.selectedProduct = product;
-        this.showEditProductModal = true;
-      },
-    },
-    async mounted() {
-      await this.$store.dispatch('fetchProducts');
-    },
-  };
-  </script>
-  
-  <style scoped>
-  
-  button {
-    background: black;
-    border-radius: 10px;
+      openEditModal(user){
+          this.selectedUser = user
+          this.showEditUserModal = true
+      }
+  },
+  async mounted() {
+      await this.$store.dispatch('fetchUsers')
+      const userId = this.$store.state.user?.userId
+      if (userId) {
+          await this.$store.dispatch('fetchUser', userId)
+      }
   }
-  
-  table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-  }
-  
-  th,
-  td {
+}
+</script>
+
+<style scoped>
+.admin {
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+  color: #f5f5f5;
+  background: #121212;
+  border-radius: 10px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background: #1e1e1e;
+  color: #f5f5f5;
+}
+
+.btn {
+  padding: 10px;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #666;
+}
+
+.users-table-container {
+  overflow-x: auto;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+th {
+  background: #1e1e1e;
+}
+
+.user-image {
+  max-width: 40px;
+  border-radius: 50%;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+@media (max-width: 350px) {
+  .admin {
     padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
   }
-  
-  th {
-    background-color: #f4f4f4;
-    cursor: pointer;
+  .search-input {
+    width: 100%;
   }
-  
-  td img {
-    max-width: 50px;
+  .users-table {
+    font-size: 12px;
   }
-  
-  .actions i {
-    margin: 0 5px;
-    cursor: pointer;
-  }
-  </style>
-  
+}
+</style>
