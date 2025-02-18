@@ -18,7 +18,6 @@
           <button class="btn" @click="showAddProductModal = true">Add Product</button>
         </div>
 
-<<<<<<< HEAD
         <div class="products-table">
           <table>
             <tr>
@@ -47,45 +46,6 @@
             </tr>
           </table>
         </div>
-=======
-        <!-- Products Table -->
-    <!-- Products Table -->
-<div class="products-table table-responsive">
-  <table>
-    <tr>
-      <th>Product ID</th>
-      <th>Image</th>
-      <th>Product Name</th>
-      <th>Category</th>
-      <th>Description</th>
-      <th>Stock</th>
-      <th @click="sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'">
-        Amount
-        <span v-if="sortOrder === 'asc'">&#9650;</span>
-        <span v-else>&#9660;</span>
-      </th>
-      <th>Actions</th>
-    </tr>
-    <tr v-if="sortedAndFilteredProducts.length === 0">
-      <td colspan="8" class="no-products">No products available</td>
-    </tr>
-    <tr v-else v-for="product in sortedAndFilteredProducts" :key="product.prodID">
-      <td>{{ product.prodID }}</td>
-      <td><img :src="product.prodUrl" :alt="product.prodName" class="product-image" loading="lazy" /></td>
-      <td>{{ product.prodName }}</td>
-      <td>{{ product.category }}</td>
-      <td>{{ product.description }}</td>
-      <td>{{ product.stock }}</td>
-      <td>R{{ product.price }}</td>
-      <td class="actions">
-        <button @click="openEditModal(product)"><i class="bi bi-pencil"></i></button>
-        <button @click="deleteProduct(product.prodID)"><i class="bi bi-trash"></i></button>
-      </td>
-    </tr>
-  </table>
-</div>
-
->>>>>>> 1377d368b4c319a492328efd0625939f8154d567
       </div>
     </div>
 
@@ -244,6 +204,4 @@ th {
     font-size: 0.8rem;
   }
 }
-
-
 </style>

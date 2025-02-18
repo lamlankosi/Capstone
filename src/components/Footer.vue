@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
     <div class="footer">
           <div class="row">
               <p class="lead">
@@ -17,24 +16,6 @@
              cYear: new Date().getUTCFullYear()
          }
     }
-=======
-  <div class="footer">
-        <div class="Footer">
-            <p class="lead">
-                Lamlankosi Nomnganga &copy; <span id="currYear"> {{ cYear  }}</span>
-            </p>
-        </div>
-    </div>
-</template>
-
-<script>
-export default {
-    name: 'FooterComponent',
-    data(){
-        return{
-           cYear: new Date().getUTCFullYear()
-       }
->>>>>>> 1377d368b4c319a492328efd0625939f8154d567
   }
   </script>
   
