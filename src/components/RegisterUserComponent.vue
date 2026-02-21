@@ -1,14 +1,16 @@
 <template>
   <div class="register-form">
     <h2>Register</h2>
-    <button class="close-button" @click="$emit('close')"><i class="bi bi-x-circle-fill"></i></button>
+    <button class="close-button" @click="$emit('close')">
+      <i class="bi bi-x-circle-fill"></i>
+    </button>
     <input type="text" v-model="firstName" placeholder="First Name" required />
     <input type="text" v-model="lastName" placeholder="Last Name" required />
     <input type="email" v-model="email" placeholder="Email" required />
     <input type="password" v-model="password" placeholder="Password" required />
-    <input type="text" v-model="Gender" placeholder="Gender" required />
+    <input type="text" v-model="gender" placeholder="Gender" required />
     <input type="text" v-model="userAge" placeholder="Age" required />
-    <input type="text" v-model="profileURL" placeholder="ImageURL">
+    <input type="text" v-model="profileURL" placeholder="Image URL" />
     <button class="register-button" @click="register">Register</button>
   </div>
 </template>
@@ -24,7 +26,7 @@ export default {
       lastName: '',
       email: '',
       password: '',
-      Gender: '',
+      gender: '',
       userAge: '',
       profileURL: ''
     };
@@ -37,10 +39,10 @@ export default {
         LastName: this.lastName,
         EmailAdd: this.email,
         password: this.password,
-        Gender: this.Gender, 
+        Gender: this.gender, 
         userAge: this.userAge,
         userRole: 'User', 
-        profileURL: '', 
+        profileURL: this.profileURL, 
       };
       await this.registerUser(payload);
       this.$emit('close');
@@ -50,16 +52,23 @@ export default {
 </script>
 
 <style scoped>
-
-
 .register-form {
   position: absolute;
-  width: 300px;
+  width: 320px;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.1); 
+  background-color: rgba(34, 40, 49, 0.9);
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgb(68, 255, 0);
-  backdrop-filter: blur(10px); 
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.5);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #f5f5f5;
+}
+
+h2 {
+  text-align: center;
+  color: #48bb78;
 }
 
 .close-button {
@@ -68,42 +77,42 @@ export default {
   right: 10px;
   background: none;
   border: none;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
+  font-size: 22px;
+  color: #a0aec0;
   cursor: pointer;
 }
 
 .close-button:hover {
-  color: #000;
+  color: #f5f5f5;
 }
 
-.register-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; 
-}
-
-input{
+input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
   font-size: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+input::placeholder {
+  color: #a0aec0;
 }
 
 .register-button {
-  background-color: #5a67d8;
+  background-color: #48bb78;
   color: white;
-  padding: 10px 20px;
+  padding: 12px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
+  transition: 0.3s ease;
 }
 
 .register-button:hover {
-  background-color: #4c51bf;
+  background-color: #38a169;
 }
-
 </style>

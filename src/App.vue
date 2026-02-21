@@ -24,16 +24,7 @@ export default {
 </script>
 
 <style src="@/assets/css/style.css">
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Ensure full height */
-}
 
-.main-content {
-  flex: 1; /* Push footer to bottom */
-  padding-bottom: 80px; /* Prevent table from being cut off */
-}
 </style>
 
 
